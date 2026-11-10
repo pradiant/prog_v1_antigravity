@@ -1,470 +1,388 @@
-# 🧭 Guía Paso a Paso: de los CSV crudos a una app de Machine Learning
+# 🧭 Guía Paso a Paso: Cómo la Consigna del Proyecto Final se Refleja en el Proyecto
 
-**Proyecto:** Clasificación de departamentos de CABA en *Gama Alta* vs. *Estándar* (BA Data 2001–2016)
-**Materia:** Programación Avanzada — Licenciatura en Ciencia de Datos
-**Formato:** guía de aprendizaje práctica. Cada paso tiene **objetivo → idea clave → qué hacer → cómo verificar → para pensar**.
+**Proyecto:** Clasificación de departamentos de CABA en *Gama Alta* vs. *Estándar* (BA Data 2001–2016)  
+**Materia:** Programación Avanzada en Ciencia de Datos — Licenciatura en Ciencia de Datos  
+**Propósito de esta guía:** Explicar paso a paso cómo funciona el proyecto y **cómo cada punto, requerimiento técnico y criterio de la rúbrica** del documento oficial (*Proyecto Final: Modelado Predictivo de Clasificación y Pipeline de Datos*) está implementado en nuestro código.
 
 > [!NOTE]
-> Esta guía es la versión pedagógica y secuencial de [DOCUMENTACION.md](file:///Users/fer/Library/CloudStorage/GoogleDrive-f.galera.05@gmail.com/My%20Drive/z%20-%20Licenciatura/3er%20cuatrimestre%202-2026/03%20-%20Programacion%20avanzada/z%20-%20TP/taller_integrador/DOCUMENTACION.md), que queda como manual de referencia (teoría, esquemas de BD, glosario completo). Las cifras provienen de ese manual; verificá las tuyas al correr el pipeline.
+> Esta guía conecta directamente la consigna oficial con los módulos del repositorio y complementa a [DOCUMENTACION.md](file:///Users/fer/Library/CloudStorage/GoogleDrive-f.galera.05@gmail.com/My%20Drive/z%20-%20Licenciatura/3er%20cuatrimestre%202-2026/03%20-%20Programacion%20avanzada/z%20-%20TP/taller_integrador/DOCUMENTACION.md), donde podés consultar el desarrollo matemático extendido y el detalle línea por línea.
 
 ---
 
-## 0. Cómo usar esta guía
+## 📋 0. Mapa de Trazabilidad: Consigna Oficial → Implementación en el Proyecto
 
-| Si querés… | Hacé esto | Tiempo estimado |
+Antes de recorrer el paso a paso, esta matriz resume **dónde y cómo se cumple cada punto del PDF de la consigna**:
+
+| Sección del PDF (Consigna Oficial) | Qué pide la cátedra | Cómo y dónde se refleja en este proyecto |
 | :--- | :--- | :--- |
-| **Entender el proyecto** | Leé los pasos 1–3 y los recuadros 💡 | 30 min |
-| **Correrlo y ver resultados** | Pasos 4, 5 y 11 | 20 min (+ entrenamiento) |
-| **Estudiarlo a fondo** | Todos los pasos en orden, con los ejercicios | 4–6 h |
-| **Extenderlo** | Pasos 12–13 | 2 h |
-
-**Convenciones:** 💡 idea clave · ⚠️ error común · ✅ checkpoint (verificá antes de seguir) · 🤔 pregunta para pensar.
-
-**Al terminar vas a poder:**
-- [ ] Explicar por qué se usa un umbral **por año** y no un precio fijo.
-- [ ] Identificar y evitar el *data leakage* en un pipeline.
-- [ ] Justificar por qué el Accuracy engaña con clases desbalanceadas.
-- [ ] Leer una matriz de confusión y traducirla a decisiones de negocio.
-- [ ] Reentrenar el modelo, guardarlo y consumirlo desde Streamlit.
+| **1. Objetivo y Dataset** | Elegir entre Opción A (Inmobiliario CABA), B (Energía) o C (Microcréditos) para clasificación binaria/multiclase. | **Opción A seleccionada:** 16 CSVs anuales (2001–2016) de BA Data en `data/raw/`. Clasificación binaria `ES_GAMA_ALTA` (`1` = Gama Alta / Lujo, `0` = Estándar / Accesible) según superficie, barrio, ambientes y prestaciones (`src/data_loader.py` y `src/cleaning.py`). |
+| **2.1 Construcción del Modelo (`scikit-learn`)** | `sklearn.pipeline.Pipeline` para preprocesamiento (imputación, escalado, codificación). Comparar ≥ 2 algoritmos y optimizar con `GridSearchCV` o `RandomizedSearchCV`. | `src/features.py` construye el `ColumnTransformer` (`SimpleImputer` + `StandardScaler` + `OneHotEncoder`). `src/models.py` ensambla `Pipeline` completos, compara **3 modelos** (`DummyClassifier`, `LogisticRegression`, `RandomForestClassifier`) y optimiza hiperparámetros con `GridSearchCV` + `StratifiedKFold(n_splits=3)`. |
+| **2.2 Evaluación de Desempeño** | Evaluar con **Accuracy, Precision, Recall y F1-Score** + **Matriz de Confusión**. | `src/evaluation.py` calcula `accuracy`, `precision`, `recall`, `f1_score` (ponderado y macro) y `roc_auc`, y exporta la matriz de confusión en `logs/matriz_confusion_ganador.png`. |
+| **2.3 Almacenamiento en Base de Datos** | Persistir en BD relacional (SQLite/PostgreSQL) o NoSQL (MongoDB):<br>• **Tabla 1:** Datos limpios<br>• **Tabla 2:** Resultados (predicciones y métricas)<br>• **Tabla 3 (Opcional - Extra):** Configuración y parámetros | **Arquitectura híbrida SQL + NoSQL (incluye el Extra):**<br>• **Tabla 1:** SQLite (`data/inmuebles.db` → tabla `departamentos_limpios`) vía `src/db_sql.py`.<br>• **Tabla 2:** MongoDB (`taller_inmobiliario` → colección `resultados` con métricas globales, matriz y predicciones) vía `src/db_mongo.py`.<br>• **Tabla 3 (Extra):** MongoDB (`colección parametros` con `best_params_` + `colección logs` vía `src/logger_setup.py`). |
+| **2.4 Visualización** | Gráficos y tablas claras con `matplotlib`, `seaborn`, `Plotly`, `Power BI` o `Streamlit`. | **Triple capa visual:**<br>1. `src/visualization.py` y `src/evaluation.py` (`matplotlib` + `seaborn`).<br>2. Notebooks `01_eda.ipynb` y `02_modelado.ipynb`.<br>3. App web interactiva en **Streamlit** (`app/app.py`) con simulador, tablero de métricas y visor de bases de datos. |
+| **3. Rúbrica y Entregables** | • Código y Git (25%)<br>• BD y visualización (25%)<br>• Modelado y resultados (25%)<br>• Defensa oral 8–10 min / 6–8 filminas (25%) | • Modularización PEP 8, Type Hints, Docstrings, `requirements.txt`, `README.md`, `main.py`.<br>• Persistencia dual y dashboard.<br>• Prevención de *data leakage* y justificación metodológica.<br>• Guion de defensa de 8–10 min incluido en la **Sección 13** de esta guía. |
 
 ---
 
-## 1. El problema: qué resolvemos y por qué es difícil
+## 1. Elección del Caso de Estudio (Sección 1 del PDF: Opción A)
 
-**Objetivo:** entender el caso de negocio antes de escribir código.
+### Qué pide la consigna
+> **Opción A — Mercado Inmobiliario y Tipificación de Propiedades (CABA):**  
+> *Dataset:* Propiedades e inmuebles en venta (Portal de Datos Abiertos de la Ciudad de Buenos Aires - BA Data).  
+> *Objetivo:* Predecir la categoría/segmento de valor del inmueble (ej. Gama Alta / Lujo vs. Estándar / Accesible) según superficie, barrios y prestaciones.
 
-**Pregunta central:** dado un departamento (m², ambientes, barrio, cochera…), ¿es de **Gama Alta** o **Estándar**?
+### Cómo lo resolvemos en el proyecto
+Trabajamos con **16 archivos CSV históricos (2001–2016)** ubicados en `data/raw/` (~178.241 registros brutos). Para transformarlos en un problema de clasificación binaria realista tuvimos que resolver tres desafíos técnicos clave:
 
-Tres dificultades reales que el proyecto enfrenta:
+1. **Datos heterogéneos entre años:** A lo largo de 16 años cambiaron los nombres de columnas (`LATITUD` vs. `LAT`, `BAÃOS` vs. `BAÑOS`, `M2CUB` vs. `M2_CUBIERTOS`) y en algunos períodos se invirtieron por error la latitud y la longitud.
+2. **Inflación en dólares y sesgo temporal:** US\$150.000 en 2002 compraban un piso de lujo en Recoleta, pero en 2016 compraban un dos ambientes estándar. Si usáramos un umbral fijo en dólares para todo el dataset, casi todo 2001–2004 sería "Estándar" y casi todo 2015–2016 sería "Gama Alta".
+3. **Solución adoptada (Target dinámico anualizado):** Definimos `ES_GAMA_ALTA = 1` cuando el valor del metro cuadrado (`U_S_M2`) del inmueble se ubica en el **25% más caro de su propio año de publicación** (percentil 75 anual, $Q_{0.75}$), y `0` en caso contrario.
 
-1. **Datos heterogéneos:** 16 CSV (uno por año) con columnas renombradas, mala codificación (`BAÃOS`), y hasta latitud/longitud invertidas.
-2. **El dólar no es una vara fija:** US$150.000 en 2002 era lujo; en 2016 era un dos ambientes común.
-3. **Un notebook no es un producto:** se busca un pipeline reproducible + bases de datos + una app.
-
-💡 **Idea clave:** el *target* no se descarga, **se construye**. Definir bien qué significa "Gama Alta" es la decisión más importante de todo el proyecto.
-
-🤔 **Para pensar:** ¿qué pasaría si definieras "Gama Alta" como "más de US$200.000"? ¿Qué porcentaje de 2002 y de 2016 quedaría en cada clase?
+💡 **Idea clave para la defensa:** El *target* no viene dado en el CSV; **se diseña con criterio de negocio y estadística** para aislar el efecto macroeconómico de 16 años.
 
 ---
 
-## 2. El mapa del recorrido
+## 2. Arquitectura Modular y Buenas Prácticas (Rúbrica: 25% Código y Git)
+
+### Qué pide la consigna
+> *"Organización del proyecto, calidad del código (PEP 8), uso de funciones y clases, comentarios y control de versiones en Git/GitHub. Formato de entrega: Código fuente estructurado, script de carga a BD, `requirements.txt` y `README.md`."*
+
+### Cómo está organizado el repositorio
 
 ```mermaid
 flowchart LR
-    A["Paso 5<br/>Ingesta"] --> B["Paso 6<br/>Limpieza"]
-    B --> C["Paso 7<br/>Target anual"]
-    C --> D["Paso 8<br/>Features sin leakage"]
-    D --> E["Paso 9<br/>Modelos"]
-    E --> F["Paso 10<br/>Evaluación"]
-    F --> G["Paso 11<br/>Persistencia + App"]
+    A["1. Ingesta<br/>src/data_loader.py"] --> B["2. Limpieza + Target<br/>src/cleaning.py"]
+    B --> C["3. Tabla 1 (SQLite)<br/>src/db_sql.py"]
+    B --> D["4. Preprocesamiento<br/>src/features.py"]
+    D --> E["5. Modelos + GridSearch<br/>src/models.py"]
+    E --> F["6. Evaluación<br/>src/evaluation.py"]
+    F --> G["7. Tablas 2 y 3 (Mongo)<br/>src/db_mongo.py"]
+    F --> H["8. Dashboard Web<br/>app/app.py"]
 ```
 
-| Etapa | Módulo | Entrada → Salida |
-| :--- | :--- | :--- |
-| Ingesta | `src/data_loader.py` | 16 CSV → 1 DataFrame (~178.241 filas) |
-| Limpieza | `src/cleaning.py` | DataFrame → ~176.377 filas |
-| Target | `src/cleaning.py` | + columna `ES_GAMA_ALTA` |
-| Features | `src/features.py` | Tabla → `X`, `y` + `ColumnTransformer` |
-| Modelado | `src/models.py` | Dummy, Regresión Logística, Random Forest |
-| Evaluación | `src/evaluation.py` | Métricas + matriz de confusión |
-| Persistencia | `src/db_sql.py`, `src/db_mongo.py` | SQLite + MongoDB |
-| Entrega | `app/app.py` | Dashboard Streamlit |
-
-💡 **Principios de diseño que vas a ver repetidos:**
-- **Separación de responsabilidades:** cada módulo hace una sola cosa.
-- **Fuente única de verdad:** rutas y constantes viven solo en `config.py`.
-- **Degradación elegante:** si MongoDB no está, el pipeline sigue (solo avisa).
-
----
-
-## 3. Estructura del repositorio
-
-```
+```text
 taller_integrador/
-├── config.py            # rutas, columnas, mapeos (fuente única de verdad)
-├── main.py              # orquesta el pipeline completo
-├── requirements.txt
-├── data/raw/            # 16 CSV originales (SOLO LECTURA)
-├── data/inmuebles.db    # SQLite generada
-├── src/                 # data_loader, cleaning, features, models,
-│                        # evaluation, db_sql, db_mongo, visualization, logger_setup
-├── notebooks/           # 01_eda.ipynb, 02_modelado.ipynb
-├── app/                 # app.py + modelo_ganador.joblib
+├── config.py            # Fuente única de verdad (rutas, columnas canónicas, constantes BD)
+├── main.py              # Orquestador punta a punta (ejecuta los 8 pasos en secuencia)
+├── requirements.txt     # Dependencias con versiones fijas para reproducibilidad
+├── README.md            # Resumen ejecutivo e instrucciones rápidas
+├── data/
+│   ├── raw/             # 16 CSV originales de BA Data (INMUTABLES / solo lectura)
+│   └── inmuebles.db     # Base de datos SQLite generada (Tabla 1: departamentos_limpios)
+├── src/                 # Paquete modular con separación de responsabilidades (SoC)
+│   ├── data_loader.py   # Lectura tolerante a fallos, mapeo de columnas y fix LAT/LON
+│   ├── cleaning.py      # Filtro geográfico CABA, limpieza de outliers y target anual
+│   ├── features.py      # Prevención de data leakage, split X/y y ColumnTransformer
+│   ├── models.py        # Pipelines scikit-learn, GridSearchCV y serialización joblib
+│   ├── evaluation.py    # Accuracy, Precision, Recall, F1, ROC-AUC y Matriz de Confusión
+│   ├── db_sql.py        # Persistencia relacional en SQLite (Tabla 1)
+│   ├── db_mongo.py      # Persistencia NoSQL en MongoDB (Tabla 2: resultados, Tabla 3: parametros)
+│   ├── visualization.py # Gráficos estadísticos con matplotlib y seaborn
+│   └── logger_setup.py  # Logging profesional (Consola + Archivo rotativo + MongoDB)
+├── notebooks/           # 01_eda.ipynb (Exploración) y 02_modelado.ipynb (Experimentación)
+├── app/                 # app.py (Streamlit) + modelo_ganador.joblib
 └── logs/                # pipeline.log + matriz_confusion_ganador.png
 ```
 
-💡 `data/raw/` es **inmutable**: nunca se sobreescribe. Así cualquier experimento se puede repetir desde cero.
+**Decisiones de ingeniería que suman en la rúbrica:**
+- **Fuente Única de Verdad (`config.py`):** Usa `Path(__file__).resolve().parent` para que ninguna ruta falle sin importar desde dónde se ejecute el script.
+- **Inmutabilidad de `data/raw/`:** Los CSV originales jamás se sobrescriben.
+- **Tipado estático y Docstrings:** Todas las funciones tienen *type hints* (`pd.DataFrame`, `Dict[str, Any]`) y docstrings formato Google (PEP 257).
+- **Degradación elegante (*Graceful Degradation*):** Si el servicio local de MongoDB está apagado, `src/db_mongo.py` captura la excepción tras un timeout corto (2 s), registra un `WARNING` en el log y continúa sin romper la ejecución.
 
 ---
 
-## 4. Paso 1 — Preparar el entorno
+## 3. Paso 1 — Preparación del Entorno y Verificación Inicial
 
-**Objetivo:** tener Python y las dependencias aisladas del resto de tu máquina.
+**Objetivo:** Ejecutar el proyecto en un entorno virtual limpio y reproducible.
 
 ```bash
 cd taller_integrador
-python3 --version            # 3.11 o 3.12
+python3 --version            # Python 3.11 o 3.12
 python3 -m venv .venv
-source .venv/bin/activate    # Windows: .venv\Scripts\Activate.ps1
+source .venv/bin/activate    # En Windows: .venv\Scripts\Activate.ps1
 pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-✅ **Checkpoint:** el prompt empieza con `(.venv)` y `python -c "import pandas, sklearn, streamlit"` no da error.
-
-⚠️ **Error común:** instalar con el Python global. Si luego aparece `ModuleNotFoundError`, casi siempre falta activar el entorno.
-
-**Opcional – MongoDB:** no es obligatorio. Sin él, el pipeline guarda en SQLite y archivos locales. Para activarlo: `brew services start mongodb-community` (macOS) o `systemctl start mongod` (Linux).
+✅ **Checkpoint:** Tu terminal muestra `(.venv)` y `python -c "import pandas, sklearn, streamlit, pymongo"` se ejecuta sin errores.
 
 ---
 
-## 5. Paso 2 — Explorar antes de limpiar (EDA)
+## 4. Paso 2 — Análisis Exploratorio de Datos (`notebooks/01_eda.ipynb`)
 
-**Objetivo:** conocer los datos *antes* de tocarlos.
+**Objetivo:** Auditar los datos crudos antes de definir las reglas de limpieza.
 
+Abrí el notebook exploratorio con:
 ```bash
-jupyter lab      # abrí notebooks/01_eda.ipynb
+jupyter lab   # Abrir notebooks/01_eda.ipynb
 ```
 
-Respondé mientras recorrés el notebook:
-- ¿Cuántas filas hay por año? ¿Hay años con muchos menos datos?
-- ¿Qué columnas tienen más nulos?
-- ¿Cómo se distribuye `M2`? ¿Y `DOLARES`? ¿Hay colas largas?
-- ¿Aparecen coordenadas fuera de CABA?
-
-✅ **Checkpoint:** podés enumerar al menos 3 problemas de calidad del dataset.
-
-💡 **Regla de oro:** el EDA genera *preguntas*; la limpieza, *reglas*. Cada filtro del paso 4 nace de algo que viste acá.
+En este notebook se descubren los hallazgos empíricos que justifican el código de `src/data_loader.py` y `src/cleaning.py`:
+1. **Esquemas cambiantes:** Columnas con nombres distintos cada año y errores de encoding (`BAÃOS`).
+2. **Coordenadas cruzadas:** En años como 2001, `LAT` tiene valores alrededor de `-58.4` y `LON` alrededor de `-34.6`.
+3. **Valores extremos irreales:** Departamentos publicados con `1 m²`, `15.000 m²` o precios de `US$ 0`.
+4. **Inflación en dólares:** El precio mediano por $\text{m}^2$ se multiplica entre 2002 y 2016.
 
 ---
 
-## 6. Paso 3 — Ingesta y unificación (`src/data_loader.py`)
+## 5. Paso 3 — Ingesta, Homogeneización y Limpieza (`src/data_loader.py` y `src/cleaning.py`)
 
-**Objetivo:** pasar de 16 archivos distintos a un único DataFrame con esquema canónico.
+**Objetivo:** Transformar los 16 archivos CSV heterogéneos en un dataset curado y consistente (la entrada para la **Tabla 1** de la consigna).
 
-**Qué hace:**
-1. Lee cada CSV con `engine="python"` y `on_bad_lines` para **advertir y saltear** líneas corruptas sin abortar.
-2. Renombra columnas con `COLUMN_RENAME_MAP` (en `config.py`): `LATITUD→LAT`, `BAÃOS/BAÑO→BAÑOS`, `M2CUB→M2_CUBIERTOS`…
-3. Agrega las columnas faltantes como `NaN` y descarta las sobrantes.
-4. Corrige coordenadas invertidas.
+### 5.1 Homogeneización y corrección geográfica (`src/data_loader.py`)
+1. **Lectura tolerante a fallos:** Usa `engine="python"` y `on_bad_lines=_warn_bad_line` para registrar y omitir filas malformadas sin abortar la carga.
+2. **Estandarización de columnas:** Renombra las variantes históricas usando `COLUMN_RENAME_MAP` de `config.py`.
+3. **Corrección vectorizada de coordenadas (`fix_lat_lon`):**  
+   En CABA, $\text{lat} \approx -34.6^\circ$ y $\text{lon} \approx -58.4^\circ$. Como $|-34.6| < |-58.4|$, toda fila donde $|\text{LAT}| > |\text{LON}|$ tiene las coordenadas invertidas y se corrige sin usar bucles `for`:
+   ```python
+   swapped = lat.abs() > lon.abs()
+   df["LAT"] = np.where(swapped, lon, lat)
+   df["LON"] = np.where(swapped, lat, lon)
+   ```
 
-**La corrección geográfica, explicada:** CABA está cerca de lat ≈ −34,6 y lon ≈ −58,4. Como |−34,6| < |−58,4|, si en una fila `|LAT| > |LON|`, están cruzadas:
+### 5.2 Delimitación de CABA y filtrado de outliers (`src/cleaning.py`)
+1. **Filtro geográfico (`filter_caba_coordinates`):** Conserva inmuebles dentro de $\text{LAT} \in [-34.72, -34.52]$ y $\text{LON} \in [-58.54, -58.33]$. Si una propiedad no tiene coordenadas (`NaN`) pero tiene un `BARRIO` válido, **se conserva** para no perder datos útiles.
+2. **Coherencia física y económica (`handle_missing_and_outliers`):**
+   - Si falta `U_S_M2`, se recalcula como `DOLARES / M2`.
+   - Se filtran rangos realistas: `M2` entre `15` y `800`, `DOLARES` entre `10.000` y `4.000.000`, y `U_S_M2` entre `200` y `15.000`.
+   - Se normalizan textos (`BARRIO` en mayúsculas y sin espacios) y se binarizan las prestaciones (`COCHERA`, `BAULERA`, `LAVADERO`, `TERRAZA` $\rightarrow 0 / 1$).
 
-```python
-swapped = lat.abs() > lon.abs()
-df["LAT"] = np.where(swapped, lon, lat)
-df["LON"] = np.where(swapped, lat, lon)
-```
-
-💡 Está **vectorizado** (`np.where` sobre toda la columna): sin bucles `for`, así es rápido en 178.000 filas.
-
-✅ **Checkpoint:** el DataFrame unificado tiene ≈178.241 filas y 22 columnas.
-
-🤔 **Para pensar:** ¿por qué usar `Path(__file__).resolve().parent` en `config.py` en vez de rutas relativas como `"data/raw"`?
-
----
-
-## 7. Paso 4 — Limpieza y consistencia (`src/cleaning.py`)
-
-**Objetivo:** quedarse con registros plausibles, sin tirar datos de más.
-
-### 4.1 Filtro geográfico (`filter_caba_coordinates`)
-Recuadro válido: `LAT ∈ [-34.72, -34.52]`, `LON ∈ [-58.54, -58.33]`.
-
-| Situación de la fila | Decisión |
-| :--- | :--- |
-| Coordenadas dentro del recuadro | ✅ se conserva |
-| Sin coordenadas pero con `BARRIO` | ✅ se conserva |
-| Coordenadas fuera de CABA (o (0,0)) | ❌ se elimina |
-
-### 4.2 Outliers y coherencia (`handle_missing_and_outliers`)
-- Conversión segura: `pd.to_numeric(..., errors="coerce")`.
-- Si falta `U_S_M2`: se recalcula como `DOLARES / M2`.
-- Rangos plausibles:
-
-| Variable | Rango |
-| :--- | :--- |
-| `M2` | 15 – 800 |
-| `DOLARES` | 10.000 – 4.000.000 |
-| `U_S_M2` | 200 – 15.000 |
-
-- Texto: `BARRIO` en mayúsculas, sin espacios, nulos → `"DESCONOCIDO"`. `COMUNA` a entero 1–15.
-- Amenidades (`COCHERA`, `BAULERA`, `LAVADERO`, `TERRAZA`) a 0/1.
-
-### Balance de la limpieza
-
-| Etapa | Entra | Sale | Descartadas |
-| :--- | ---: | ---: | ---: |
-| Filtro CABA | 178.241 | 177.980 | ~261 |
-| Outliers | 177.980 | 176.377 | ~1.603 |
-
-Se pierde ≈1,05 %: se eliminan las anomalías sin sacrificar volumen.
-
-✅ **Checkpoint:** `df["M2"].min() >= 15` y `df["DOLARES"].max() <= 4_000_000`.
-
-⚠️ **Error común:** elegir rangos mirando solo el modelo final. Los umbrales deben justificarse con el negocio (¿un depto de 1 m²? ¿una cochera cargada como depto?), no con la métrica.
-
----
-
-## 8. Paso 5 — Construir el target sin sesgo temporal
-
-**Objetivo:** crear `ES_GAMA_ALTA` de forma justa a lo largo de los años.
-
+### 5.3 Construcción del Target sin sesgo temporal (`create_target`)
 $$\text{Umbral}_t = Q_{0.75}(\text{U\_S\_M2}_t) \qquad \text{ES\_GAMA\_ALTA}_i = \mathbb{1}\left[\text{U\_S\_M2}_i \ge \text{Umbral}_{t(i)}\right]$$
 
 ```python
-threshold_per_year = df.groupby("AÑO")["U_S_M2"].transform(lambda s: s.quantile(0.75))
-df["ES_GAMA_ALTA"] = (df["U_S_M2"] >= threshold_per_year).astype(int)
+threshold_per_year = result_df.groupby("AÑO")["U_S_M2"].transform(
+    lambda s: s.quantile(0.75)
+)
+result_df["ES_GAMA_ALTA"] = (result_df["U_S_M2"] >= threshold_per_year).astype(int)
 ```
 
-💡 `.transform()` devuelve una serie **del mismo tamaño** que el DataFrame, con el umbral de cada año repetido en cada fila. Por eso se puede comparar fila a fila.
-
-**Resultado:** 132.282 en clase 0 y 44.095 en clase 1 → **75 % / 25 %** (desbalanceado a propósito, por definición del percentil 75).
-
-✅ **Checkpoint:** `df["ES_GAMA_ALTA"].mean()` ≈ 0,25 en todo el dataset y también dentro de cada año.
-
-🤔 **Para pensar:** ¿qué ventaja tiene este enfoque frente a uno fijo? ¿Qué limitación introduce? *(Pista: siempre habrá exactamente ~25 % de "lujo", aunque el mercado se abarate.)*
+**Balance del proceso de curación:**
+- **Entran:** `178.241` filas brutas.
+- **Salen:** `176.377` filas limpias (se descarta apenas el **1,05%** de anomalías).
+- **Distribución de clases:** `132.282` Estándar (`75%`) y `44.095` Gama Alta (`25%`).
 
 ---
 
-## 9. Paso 6 — Guardar el dataset limpio (SQLite)
+## 6. Paso 4 — Construcción del Pipeline de Preprocesamiento (Requerimiento Técnico 1)
 
-**Objetivo:** persistir el resultado curado para consultarlo con SQL.
+### Qué pide la consigna
+> *"1. Construcción del Modelo (scikit-learn): Implementar un `sklearn.pipeline.Pipeline` para el preprocesamiento (imputación, escalado, codificación de categóricas)."*
 
-El pipeline escribe la tabla `departamentos_limpios` en `data/inmuebles.db`. Probalo:
+### Cómo se refleja en `src/features.py`
 
-```bash
-sqlite3 data/inmuebles.db "SELECT count(*) FROM departamentos_limpios;"
-# ≈ 176377
+#### 6.1 Prevención estricta de *Data Leakage* (`split_features_and_target`)
+Como `ES_GAMA_ALTA` se definió a partir de `U_S_M2` (y éste proviene de `DOLARES / M2`), **se excluyen `DOLARES` y `U_S_M2` de la matriz predictora `X`**. Si quedaran en `X`, el árbol de decisión adivinaría la regla matemática logrando ~100% de acierto ficticio sin aprender nada sobre las características del inmueble.
 
-sqlite3 data/inmuebles.db \
- "SELECT BARRIO, ROUND(100.0*AVG(ES_GAMA_ALTA),1) AS pct
-  FROM departamentos_limpios GROUP BY BARRIO ORDER BY pct DESC LIMIT 5;"
+Las variables predictoras (`X`) son exclusivamente características físicas, de ubicación y prestaciones:
+- **Numéricas (`DEFAULT_NUMERIC_FEATURES`):** `M2`, `M2_CUBIERTOS`, `AMBIENTES`, `BAÑOS`, `ANTIGUEDAD`, `COCHERA`, `BAULERA`, `LAVADERO`, `TERRAZA`.
+- **Categóricas (`DEFAULT_CATEGORICAL_FEATURES`):** `BARRIO`, `COMUNA`.
+
+#### 6.2 `ColumnTransformer` integrado en el `Pipeline` (`build_preprocessor`)
+```python
+numeric_transformer = Pipeline(steps=[
+    ("imputer", SimpleImputer(strategy="median")),
+    ("scaler", StandardScaler()),
+])
+
+categorical_transformer = Pipeline(steps=[
+    ("imputer", SimpleImputer(strategy="most_frequent")),
+    ("onehot", OneHotEncoder(handle_unknown="ignore", sparse_output=False)),
+])
 ```
 
-💡 **Por qué SQL y NoSQL:** SQLite guarda datos **tabulares y estables** (el dataset, las predicciones). MongoDB guarda **documentos flexibles** (métricas, hiperparámetros, logs) cuya forma puede cambiar.
+- **¿Por qué `median` y no `mean`?** La mediana es robusta frente a la asimetría positiva de superficies y antigüedades inmobiliarias.
+- **¿Por qué `StandardScaler`?** Lleva cada variable numérica a media 0 y desvío 1 ($z = \frac{x-\mu}{\sigma}$), indispensable para que `M2` (escala de cientos) no domine sobre `BAÑOS` (escala de 1 a 4) en la Regresión Logística.
+- **¿Por qué `handle_unknown="ignore"` en `OneHotEncoder`?** Si en producción o en el simulador de Streamlit aparece un barrio no visto en el entrenamiento, el codificador asigna ceros en las variables *dummy* en lugar de lanzar una excepción.
+- **¿Por qué hacer `train_test_split` ANTES del `fit`?** En `main.py` primero se divide 80% Train / 20% Test estratificado (`stratify=y`, `random_state=42`) y recién después el `Pipeline` ajusta medianas, medias y desvíos **solo sobre `X_train`**, evitando cualquier fuga de información desde `X_test`.
 
 ---
 
-## 10. Paso 7 — Features sin *data leakage* (`src/features.py`)
+## 7. Paso 5 — Comparación de Algoritmos y Optimización (Requerimiento Técnico 1)
 
-**Objetivo:** armar `X` e `y` y un preprocesador reutilizable.
+### Qué pide la consigna
+> *"Comparar al menos dos algoritmos de clasificación (ej. Logistic Regression, Random Forest, XGBoost) y optimizar hiperparámetros con `GridSearchCV` o `RandomizedSearchCV`."*
 
-### 7.1 Eliminar lo que "delata" al target
-`ES_GAMA_ALTA` se calculó con `U_S_M2` (que viene de `DOLARES / M2`). Si esas columnas quedaran en `X`, el modelo aprendería la fórmula y daría ~100 % **sin entender nada del mercado**.
+### Cómo se refleja en `src/models.py` y `main.py`
 
-> [!IMPORTANT]
-> **Data leakage** = información del futuro (o del target) disponible al entrenar pero no al predecir. `split_features_and_target` excluye `DOLARES` y `U_S_M2` deliberadamente.
+En lugar de comparar solo dos algoritmos, el proyecto entrena y compara **tres niveles de complejidad** donde cada uno es un `sklearn.pipeline.Pipeline` completo (`preprocessor` + `classifier`):
 
-### 7.2 Partición estratificada
-80 % train / 20 % test con `stratify=y`, `random_state=42` → ambos conjuntos mantienen la proporción 75/25. Test = 35.276 propiedades.
+| Nivel | Algoritmo en `src/models.py` | Rol metodológico | Configuración clave |
+| :-: | :--- | :--- | :--- |
+| **0 (Piso)** | `DummyClassifier` | Demostrar la trampa del Accuracy ante clases 75/25 | `strategy="most_frequent"` (predice siempre clase 0) |
+| **1 (Lineal)** | `LogisticRegression` | Baseline paramétrico e interpretable | `max_iter=1000`, `class_weight="balanced"` (compensa el 75/25) |
+| **2 (Ensamble)** | `RandomForestClassifier` | Capturar relaciones no lineales e interacciones (ej. *terraza × barrio*) | Optimizado con `GridSearchCV` + `StratifiedKFold(n_splits=3)` |
 
-⚠️ **Orden correcto:** primero **separar**, después **ajustar** imputadores/escaladores *solo con train*. Ajustarlos con todo el dataset también es leakage.
-
-### 7.3 `ColumnTransformer`
-
-| Tipo | Columnas | Transformaciones |
-| :--- | :--- | :--- |
-| Numéricas | `M2`, `AMBIENTES`, `BAÑOS`, `ANTIGUEDAD`, amenidades | `SimpleImputer(median)` → `StandardScaler` |
-| Categóricas | `BARRIO`, `COMUNA` | `SimpleImputer(most_frequent)` → `OneHotEncoder(handle_unknown="ignore")` |
-
-- **Mediana** (no media): robusta a colas pesadas.
-- **StandardScaler:** $z = (x-\mu)/\sigma$. Ej.: con μ=65 y σ=30, un depto de 155 m² tiene z=+3.
-- **`handle_unknown="ignore"`:** un barrio nuevo en producción produce ceros en las dummies, en lugar de romper la app.
-
-✅ **Checkpoint:** `X.columns` no contiene `DOLARES` ni `U_S_M2`.
-
-🤔 **Para pensar:** si probaras agregar `DOLARES` a `X`, ¿qué F1 esperás? Probalo y comprobalo (ejercicio 3).
-
----
-
-## 11. Paso 8 — Entrenar y comparar modelos (`src/models.py`)
-
-**Objetivo:** comparar contra un piso, un modelo simple y uno potente.
-
-| # | Modelo | Rol didáctico |
-| :-: | :--- | :--- |
-| 1 | `DummyClassifier(most_frequent)` | **Piso:** predice siempre "Estándar" |
-| 2 | `LogisticRegression(class_weight="balanced")` | Baseline lineal, interpretable |
-| 3 | `RandomForestClassifier` + `GridSearchCV` | Ensamble no lineal |
-
-**`class_weight="balanced"`:** pondera cada clase inversamente a su frecuencia, $w_c = \frac{n}{k\cdot n_c}$. Equivocarse en Gama Alta cuesta ~3 veces más que en Estándar.
-
-**`GridSearchCV`:**
+#### Optimización de Hiperparámetros (`optimize_with_gridsearch`)
 ```python
 cv = StratifiedKFold(n_splits=3, shuffle=True, random_state=42)
-param_grid = {"classifier__n_estimators": [50, 100],
-              "classifier__max_depth": [10, 20]}
-# scoring="f1_weighted"
+param_grid = {
+    "classifier__n_estimators": [50, 100],
+    "classifier__max_depth": [10, 20],
+}
+grid_search = GridSearchCV(
+    estimator=pipe_rf,
+    param_grid=param_grid,
+    cv=cv,
+    scoring="f1_weighted",
+    n_jobs=-1,
+)
 ```
-- `StratifiedKFold` mantiene el 25 % de lujo en cada pliegue.
-- El prefijo `classifier__` indica que el parámetro pertenece al paso `classifier` del `Pipeline`.
-- El proyecto selecciona al ganador por **F1 ponderado**.
-
-**Ganador reportado:** `RandomForest_Tuned` (`max_depth=20`, `n_estimators=100`), F1 ponderado = 0,8013.
-
-💡 **Cómo funciona Random Forest:** muchos árboles, cada uno entrenado con una muestra *bootstrap* y un subconjunto aleatorio de columnas; la predicción promedia los votos. Reduce la varianza de un árbol individual.
-
-⚠️ **Si tu PC es lenta:** reducí la muestra del `GridSearchCV` o la grilla (`n_estimators: [50]`).
+- **Resultado del ajuste:** Los mejores hiperparámetros hallados son `{'classifier__max_depth': 20, 'classifier__n_estimators': 100}`.
+- **Selección automática (`compare_models`):** Evalúa todos los candidatos sobre `X_test` (`35.276` propiedades) y corona ganador a `RandomForest_Tuned` por obtener el mayor **F1-Score ponderado (`0.8013`)**.
 
 ---
 
-## 12. Paso 9 — Evaluar: leer números, no solo mirarlos
+## 8. Paso 6 — Evaluación de Desempeño y Matriz de Confusión (Requerimiento Técnico 2)
 
-**Matriz de confusión del test (35.276 filas):**
+### Qué pide la consigna
+> *"2. Evaluación de Desempeño: Evaluar los modelos utilizando las métricas: **Accuracy, Precision, Recall y F1-Score**, acompañadas por la **Matriz de Confusión** correspondiente."*
 
-| | Predice Estándar | Predice Gama Alta |
-| :--- | :---: | :---: |
-| **Real Estándar** | VN = 21.299 | FP = 5.133 |
-| **Real Gama Alta** | FN = 2.183 | VP = 6.661 |
+### Cómo se refleja en `src/evaluation.py` y cómo defender los resultados
 
-| Métrica | Cálculo | Valor | Lectura |
-| :--- | :--- | :---: | :--- |
-| Accuracy | (6.661+21.299)/35.276 | 79,26 % | Aciertos totales |
-| Precision (Alta) | 6.661/(6.661+5.133) | 56,48 % | Cuando dice "lujo", acierta poco más de la mitad |
-| Recall (Alta) | 6.661/(6.661+2.183) | 75,32 % | Detecta ~3 de cada 4 lujos reales |
-| F1 (Alta) | 2·P·R/(P+R) | 64,55 % | Equilibrio P/R en la clase minoritaria |
-| ROC-AUC | — | 85,56 % | Prob. de rankear un lujo por encima de un estándar |
+Sobre el conjunto de prueba independiente (`35.276` departamentos: `26.432` Estándar y `8.844` Gama Alta), el modelo ganador (`RandomForest_Tuned`) arroja la siguiente **Matriz de Confusión** (guardada automáticamente en `logs/matriz_confusion_ganador.png`):
 
-### La trampa del Accuracy
-El Dummy obtiene **74,93 %** de Accuracy (26.432/35.276) con **0 %** de Recall en lujo. Nuestro 79,26 % parece poco mejor, pero el valor real está en detectar la clase minoritaria.
+| | Predicción: Estándar (0) | Predicción: Gama Alta (1) | Total Real |
+| :--- | :---: | :---: | :---: |
+| **Real: Estándar (0)** | **VN = 21.299** | **FP = 5.133** *(Error Tipo I)* | 26.432 (74,93%) |
+| **Real: Gama Alta (1)** | **FN = 2.183** *(Error Tipo II)* | **VP = 6.661** | 8.844 (25,07%) |
 
-### Traducción al negocio
-- **Falso Positivo** → *sobretasar*: la propiedad queda meses sin venderse.
-- **Falso Negativo** → *oportunidad perdida/ganga*: algo valioso clasificado como accesible.
+#### Tabla Comparativa de las 4 Métricas Obligatorias (+ ROC-AUC)
 
-💡 Qué error pesa más depende del negocio: una inmobiliaria quizá prefiera evitar FP; un inversor, minimizar FN.
+| Métrica exigida | Fórmula | Valor Global (Ponderado) | Valor en Clase Gama Alta (1) | Interpretación para la defensa oral |
+| :--- | :--- | :---: | :---: | :--- |
+| **Accuracy** | $\frac{VP+VN}{\text{Total}}$ | **79,26%** | — | Clasifica bien casi 8 de cada 10 inmuebles. Supera al piso ingenuo (`74,93%`) que no detectaba ningún lujo. |
+| **Precision** | $\frac{VP}{VP+FP}$ | **82,12%** | **56,48%** | Ponderada es alta por el 90,7% en clase Estándar. En Gama Alta indica que de cada 100 predichos como lujo, ~56 lo son realmente. |
+| **Recall** | $\frac{VP}{VP+FN}$ | **79,26%** | **75,32%** | **Punto fuerte del modelo:** detecta **3 de cada 4** propiedades de Gama Alta reales del mercado (`6.661` de `8.844`). |
+| **F1-Score** | $2\cdot\frac{P\cdot R}{P+R}$ | **80,13%** | **64,55%** | Media armónica que equilibra Precision y Recall (F1 Macro = `74,95%`). |
+| **ROC-AUC** *(Extra)* | Área bajo curva ROC | **85,56%** | **85,56%** | Excelente capacidad de discriminación probabilística en todos los umbrales de corte. |
 
-⚠️ **Nota sobre las métricas ponderadas:** la Precision/F1 ponderadas (82,12 % / 80,13 %) promedian ambas clases y quedan "infladas" por la clase mayoritaria. Para la clase de interés mirá siempre las métricas **por clase**.
-
-✅ **Checkpoint:** recalculá Precision y Recall de Gama Alta a mano desde la matriz y comprobá que coinciden con las del reporte.
+💡 **Lectura de negocio de los errores:**
+- **Falso Positivo (`5.133` casos):** Departamentos estándar con muy buenas prestaciones (ej. cochera y terraza en un barrio medio) que el modelo clasifica como Gama Alta. En el negocio inmobiliario equivale al riesgo de **sobretasar**.
+- **Falso Negativo (`2.183` casos):** Departamentos caros por $\text{m}^2$ pero pequeños o sin amenities que el modelo clasifica como Estándar. Para un inversor representan **oportunidades de compra subvaluadas ("gangas")**.
 
 ---
 
-## 13. Paso 10 — Ejecutar todo de punta a punta
+## 9. Paso 7 — Almacenamiento e Integración con Bases de Datos (Requerimiento Técnico 3)
 
+### Qué pide la consigna
+> *"3. Almacenamiento e Integración con Base de Datos: Persistir la información en una base de datos relacional (SQLite, PostgreSQL) o NoSQL (MongoDB). La BD debe incluir:*  
+> *• **Tabla 1:** Datos de entrada limpios y preprocesados.*  
+> *• **Tabla 2:** Resultados del modelo (predicciones y métricas globales).*  
+> *• **Tabla 3 (Opcional - Extra):** Configuración y parametrización del modelo."*
+
+### Cómo superamos el requerimiento: Arquitectura Políglota (SQLite + MongoDB)
+
+En lugar de elegir solo SQLite o solo MongoDB, el proyecto integra **ambos motores** asignando a cada uno la estructura de datos para la cual fue diseñado, e incluye la **Tabla 3 opcional** más una colección adicional de auditoría:
+
+```mermaid
+flowchart TD
+    subgraph SQL ["Motor Relacional: SQLite (data/inmuebles.db)"]
+        T1["✅ TABLA 1 (Consigna)<br/>Tabla: departamentos_limpios<br/>176.377 filas estructuradas (src/db_sql.py)"]
+    end
+
+    subgraph NoSQL ["Motor Documental: MongoDB (db: taller_inmobiliario)"]
+        T2["✅ TABLA 2 (Consigna)<br/>Colección: resultados<br/>Métricas globales, matriz de confusión y muestra de predicciones (src/db_mongo.py)"]
+        T3["⭐ TABLA 3 (Opcional - Extra)<br/>Colección: parametros<br/>Hiperparámetros óptimos de GridSearchCV (src/db_mongo.py)"]
+        T4["➕ EXTRA DE INGENIERÍA<br/>Colección: logs<br/>Trazabilidad y eventos de ejecución en tiempo real (src/logger_setup.py)"]
+    end
+```
+
+#### Cómo verificar cada tabla por consola
+
+1. **Verificar Tabla 1 en SQLite (`departamentos_limpios`):**
+   ```bash
+   sqlite3 data/inmuebles.db "SELECT COUNT(*), ROUND(AVG(ES_GAMA_ALTA)*100, 2) FROM departamentos_limpios;"
+   # Devuelve: 176377|25.0
+   ```
+2. **Verificar Tablas 2 y 3 en MongoDB (o desde la Pestaña 3 de Streamlit):**
+   - `save_model_results_mongo()` en `src/db_mongo.py` inserta en la colección `resultados` el documento JSON con `timestamp`, `modelo`, `total_muestras_test`, el diccionario completo `metricas`, `matriz_confusion` y `muestra_predicciones` (con `id`, `real`, `prediccion` y `probabilidad`).
+   - `save_model_parameters_mongo()` en `src/db_mongo.py` inserta en la colección `parametros` los hiperparámetros ganadores (`best_params_`) sanitizados a tipos nativos BSON.
+
+---
+
+## 10. Paso 8 — Visualización e Interfaz Interactiva (Requerimiento Técnico 4)
+
+### Qué pide la consigna
+> *"4. Visualización: Presentar gráficos y tablas claras utilizando matplotlib, seaborn, Plotly, Power BI o Streamlit."*
+
+### Las 3 capas de visualización implementadas en el proyecto
+
+1. **Gráficos estadísticos estáticos (`src/visualization.py` y `src/evaluation.py`):**
+   - Construidos con `matplotlib` y `seaborn` (tema `whitegrid`, paleta `viridis`, exportación en alta resolución a `300 DPI`):
+     - `plot_price_distribution()`: Histograma + curva KDE de precios en USD y $\text{USD/m}^2$.
+     - `plot_top_barrios_gama_alta()`: Ranking horizontal de los 15 barrios con mayor proporción de Gama Alta vs. Estándar.
+     - `plot_correlation_heatmap()`: Matriz de correlación de Pearson con máscara triangular superior.
+     - `plot_and_save_confusion_matrix()`: Heatmap anotado en `logs/matriz_confusion_ganador.png`.
+2. **Cuadernos interactivos (`notebooks/01_eda.ipynb` y `notebooks/02_modelado.ipynb`):**
+   - Permiten reproducir paso a paso las visualizaciones exploratorias y la comparativa de clasificadores.
+3. **Aplicación Web en producción con Streamlit (`app/app.py`):**
+   - Ejecutable con `streamlit run app/app.py`, organizada en **3 pestañas**:
+     - **Pestaña 1 — Simulador de Tasación:** El usuario ingresa m², ambientes, baños, antigüedad, barrio y prestaciones; la app consume `app/modelo_ganador.joblib` y muestra al instante si es **Gama Alta** o **Estándar** junto a la probabilidad exacta (`predict_proba`).
+     - **Pestaña 2 — Desempeño del Modelo:** Tarjetas KPI con Accuracy, Precision, Recall, F1-Score y visualización de la Matriz de Confusión.
+     - **Pestaña 3 — Explorador de Bases de Datos:** Visor en vivo de la **Tabla 1** (SQLite `departamentos_limpios` con filtros SQL) y de las **Tablas 2 y 3** (colecciones `resultados` y `parametros` de MongoDB).
+
+---
+
+## 11. Paso 9 — Cómo Ejecutar el Proyecto Completo de Punta a Punta
+
+### 1. Correr el pipeline automatizado (entrenamiento + persistencia en BD)
 ```bash
 python main.py
 ```
+Esto ejecuta las **8 etapas** en orden:
+1. Unifica los 16 CSV de `data/raw/` (`178.241` filas).
+2. Limpia outliers, filtra CABA y crea el target `ES_GAMA_ALTA` (`176.377` filas).
+3. Guarda la **Tabla 1** en SQLite (`data/inmuebles.db` → `departamentos_limpios`).
+4. Separa `X` (sin `DOLARES` ni `U_S_M2`) e `y`, y divide en 80% Train / 20% Test estratificado.
+5. Construye el `ColumnTransformer` (imputación + escalado + One-Hot).
+6. Entrena `DummyClassifier`, `LogisticRegression` y optimiza `RandomForestClassifier` con `GridSearchCV`.
+7. Evalúa en Test, elige al ganador por F1-Score y guarda `logs/matriz_confusion_ganador.png`.
+8. Persiste la **Tabla 2** (`resultados`) y la **Tabla 3** (`parametros`) en MongoDB, y serializa el pipeline ganador en `app/modelo_ganador.joblib`.
 
-Verás 8 etapas con logs:
-
-| Etapa | Qué ocurre |
-| :-: | :--- |
-| 1 | Carga y unifica los 16 CSV |
-| 2 | Limpieza + target |
-| 3 | Guarda en SQLite |
-| 4 | Split 80/20 estratificado |
-| 5 | Construye el `ColumnTransformer` |
-| 6 | Entrena Dummy, Logística y Random Forest (con grid) |
-| 7 | Compara en test y elige ganador |
-| 8 | Guarda resultados en MongoDB (si hay) y el modelo en `app/modelo_ganador.joblib` |
-
-✅ **Checkpoints finales:**
+### 2. Lanzar el Dashboard interactivo en Streamlit
 ```bash
-ls -lh app/modelo_ganador.joblib      # existe
-tail -n 20 logs/pipeline.log          # sin errores
-ls logs/matriz_confusion_ganador.png  # gráfico generado
+streamlit run app/app.py
 ```
 
-**Reproducibilidad:** `random_state=42` en split, CV y modelos → mismos resultados en cualquier máquina.
+---
 
-**Logging profesional** (`src/logger_setup.py`): consola + `logs/pipeline.log` rotativo (2 MB, 3 backups) + colección `logs` en MongoDB si está disponible.
+## 12. Checklist de Entregables (Sección 3 del PDF: Formato de Entrega)
+
+Verificá estos puntos antes de entregar o exponer:
+
+- [x] **Repositorio Git estructurado:** Código modular en `src/`, configuración en `config.py`, orquestador en `main.py`, cuadernos en `notebooks/` y app en `app/app.py`.
+- [x] **Script de carga a BD:** Integrado automáticamente en `main.py` a través de `src/db_sql.py` (SQLite) y `src/db_mongo.py` (MongoDB).
+- [x] **`requirements.txt` y `README.md`:** Incluidos en la raíz del proyecto.
+- [x] **Base de Datos accesible para revisión:** Archivo `data/inmuebles.db` generado y consultable tanto por CLI (`sqlite3`) como desde la Pestaña 3 de la app de Streamlit.
+- [x] **Presentación oral (6 a 8 filminas, 8 a 10 minutos):** Guía estructurada a continuación.
 
 ---
 
-## 14. Paso 11 — Usar el modelo desde la app
+## 13. Guía para la Presentación Oral y Defensa (Rúbrica: 25% — 8 a 10 min)
 
-```bash
-streamlit run app/app.py     # http://localhost:8501
-```
+La consigna establece una exposición de **8 a 10 minutos** apoyada en **6 a 8 diapositivas (filminas)**. Esta estructura está diseñada para cubrir exactamente lo que evalúan los docentes en la rúbrica:
 
-| Pestaña | Qué hace |
-| :--- | :--- |
-| **1. Simulador** | Armás un depto → `predict()` + `predict_proba()` → segmento y % de certeza |
-| **2. Métricas** | Tarjetas de métricas + matriz de confusión |
-| **3. Bases de datos** | Visor de SQLite y MongoDB, sin clientes externos |
-
-**Ejemplo de lectura:** `predict_proba → [0.126, 0.874]` ⇒ 87,4 % de ser Gama Alta; como ≥ 0,50 se etiqueta *Gama Alta*.
-
-💡 La app **no reentrena**: solo carga el `Pipeline` serializado con `joblib`, que ya incluye el preprocesamiento. Por eso recibe datos "crudos" y funciona igual que en entrenamiento.
-
-🤔 **Para pensar:** ¿qué pasa si ingresás un barrio inexistente? *(Mirá `handle_unknown="ignore"`.)*
+| Filmina | Título sugerido | Tiempo | Qué mostrar y qué explicar (Puntos clave de defensa) |
+| :-: | :--- | :-: | :--- |
+| **1** | **Problema y Caso de Negocio (Opción A)** | 1 min | Objetivo: clasificar departamentos de CABA en *Gama Alta* vs. *Estándar* sobre 16 años de BA Data (2001–2016, >178k filas). Destacar el desafío de la inflación en dólares y datos públicos heterogéneos. |
+| **2** | **Ingeniería de Datos y Target Dinámico** | 1,5 min | Cómo pasamos de `178.241` a `176.377` registros (descarte de solo `1,05%`): corrección vectorizada de `LAT/LON` invertidas, filtro geográfico CABA y creación de `ES_GAMA_ALTA` con el **percentil 75 anual** de $\text{USD/m}^2$ para eliminar el sesgo temporal. |
+| **3** | **Arquitectura Modular y Prevención de Data Leakage** | 1,5 min | Diagrama de `src/`. Explicar por qué **eliminamos `DOLARES` y `U_S_M2` de `X`** (evitar *data leakage*) y cómo `ColumnTransformer` + `Pipeline` aplican mediana, `StandardScaler` y `OneHotEncoder(handle_unknown="ignore")` ajustados solo sobre Train (80/20 estratificado). |
+| **4** | **Modelado y Optimización con `GridSearchCV`** | 1,5 min | Comparativa de los 3 modelos: `DummyClassifier` (piso ingenuo), `LogisticRegression` (`class_weight="balanced"`) y `RandomForestClassifier` afinado con `GridSearchCV` + `StratifiedKFold(3)` (`max_depth=20`, `n_estimators=100`). |
+| **5** | **Evaluación de Resultados y Matriz de Confusión** | 1,5 min | Mostrar `logs/matriz_confusion_ganador.png`. Explicar por qué el Accuracy (`79,26%`) solo no alcanza en un dataset 75/25 y destacar el **Recall de Gama Alta (`75,32%`)**, el **F1 ponderado (`80,13%`)** y el **ROC-AUC (`85,56%`)**, traduciendo FP (sobretasar) y FN (oportunidad/ganga) al negocio. |
+| **6** | **Persistencia Políglota (SQLite + MongoDB)** | 1 min | Mostrar cómo cumplimos las 3 tablas de la consigna: **Tabla 1** en SQLite (`departamentos_limpios`), **Tabla 2** en MongoDB (`resultados`), **Tabla 3 Extra** en MongoDB (`parametros`) + colección `logs`, con *graceful degradation*. |
+| **7** | **Demo Visual en Streamlit y Conclusiones** | 1,5 min | Captura o demo de `app/app.py` (Simulador en vivo con `modelo_ganador.joblib`, tablero de métricas y visor de BD). Cierre con aprendizajes y posibles extensiones (ej. XGBoost o nuevas variables). |
 
 ---
 
-## 15. Paso 12 — Extender el proyecto
+## 14. Preguntas Frecuentes de Examen / Defensa Oral (y cómo responderlas)
 
-### Agregar una variable (ej. `ORIENT`)
-1. Verificá que exista en las columnas de `config.py`.
-2. Agregala a `DEFAULT_CATEGORICAL_FEATURES` en `src/features.py`.
-3. Agregá `st.selectbox("Orientación", [...])` en `app/app.py`.
-4. **Reentrenar** (`python main.py`): el `.joblib` viejo no conoce la columna nueva.
-
-### Probar otro algoritmo (ej. XGBoost)
-1. `pip install xgboost`
-2. Crear un `Pipeline([("preprocessor", pre), ("classifier", XGBClassifier(...))])` en `src/models.py`.
-3. Sumarlo a los candidatos en `main.py`; `compare_models` lo evaluará.
-
----
-
-## 16. Paso 13 — Laboratorio: ejercicios
-
-### 🟢 Nivel 1 — Exploración
-1. Escribí una consulta SQL con los 5 barrios con mayor % de Gama Alta.
-2. Cambiá el percentil a `0.80`. ¿Cómo cambian el balance de clases y las métricas?
-
-### 🟡 Nivel 2 — Modelado
-3. **Provocá leakage a propósito:** agregá `U_S_M2` a `X`. Observá el F1, explicá por qué es engañoso y revertí.
-4. Cambiá la imputación numérica a `mean`. ¿Qué cambia?
-5. Agregá **Especificidad** $= \frac{VN}{VN+FP}$ a `src/evaluation.py`.
-
-### 🔴 Nivel 3 — Ingeniería
-6. Creá `RATIO_M2_AMBIENTE = M2 / AMBIENTES` (cuidado con la división por cero) y medí su impacto.
-7. Escribí tests con `pytest`: sin nulos en `ES_GAMA_ALTA`, coordenadas dentro del recuadro de CABA, y `DOLARES`/`U_S_M2` ausentes de `X`.
-8. Ajustá el umbral de decisión (0,5 → 0,4) y analizá el trade-off Precision/Recall.
-
----
-
-## 17. Solución de problemas
-
-| Síntoma | Causa probable | Solución |
-| :--- | :--- | :--- |
-| `FileNotFoundError ... departamentos-en-venta-2008.csv` | Falta un CSV anual | Colocarlo en `data/raw/` con el nombre exacto |
-| `ModuleNotFoundError: No module named 'src'` | Ejecutás desde otra carpeta | Correr desde la raíz del proyecto |
-| `ModuleNotFoundError` de una librería | Entorno no activado | `source .venv/bin/activate` |
-| Entrenamiento lentísimo / `MemoryError` | Grilla o muestra muy grande | Reducir grilla o `sample_size` |
-| `Warning: MongoDB no disponible` | Servicio apagado | No bloquea. Iniciar `mongod` si lo querés |
-| La app falla al cargar el modelo | Falta el `.joblib` | Correr `python main.py` primero |
-
----
-
-## 18. Checklist final de autoevaluación
-
-- [ ] Puedo explicar el flujo de punta a punta sin mirar la guía.
-- [ ] Sé por qué `DOLARES` y `U_S_M2` no están en `X`.
-- [ ] Sé por qué se hace el split **antes** de ajustar el preprocesamiento.
-- [ ] Calculé a mano Precision, Recall y F1 desde la matriz.
-- [ ] Puedo argumentar cuándo conviene SQLite y cuándo MongoDB.
-- [ ] Reentrené el modelo con un cambio propio y lo vi reflejado en la app.
-
----
-
-## 19. Glosario express
-
-| Término | Significado breve |
-| :--- | :--- |
-| **Baseline** | Modelo simple de referencia para saber si uno complejo aporta valor |
-| **Data leakage** | Información del target/futuro filtrada al entrenamiento |
-| **ColumnTransformer** | Aplica transformaciones distintas por columna |
-| **Pipeline** | Encadena preprocesamiento + modelo en un solo objeto |
-| **Imputación** | Reemplazar nulos por mediana/moda/etc. |
-| **One-Hot** | Texto → columnas 0/1 sin orden implícito |
-| **Hiperparámetro** | Configuración que no se aprende de los datos |
-| **Stratified K-Fold** | Validación cruzada que preserva la proporción de clases |
-| **Ensamble** | Combinación de muchos modelos |
-| **ROC-AUC** | Capacidad de discriminar clases en todos los umbrales (0,5 = azar) |
-| **Percentil** | Valor bajo el cual cae cierto % de observaciones |
-
-> Para teoría ampliada (sigmoide, log-loss, Gini), esquemas completos de las tablas SQLite y colecciones de Mongo, consultá [DOCUMENTACION.md](file:///Users/fer/Library/CloudStorage/GoogleDrive-f.galera.05@gmail.com/My%20Drive/z%20-%20Licenciatura/3er%20cuatrimestre%202-2026/03%20-%20Programacion%20avanzada/z%20-%20TP/taller_integrador/DOCUMENTACION.md).
-
+1. **¿Por qué no usaron un precio fijo en dólares para definir Gama Alta?**  
+   *Respuesta:* Porque entre 2001 y 2016 hubo una fuerte inflación en dólares en el mercado inmobiliario porteño. Un umbral fijo habría clasificado casi todas las propiedades de 2001–2004 como Estándar y las de 2015–2016 como Gama Alta, haciendo que el modelo aprendiera la fecha y no la calidad edilicia. El percentil 75 anual garantiza que en cada año el 25% superior sea considerado Gama Alta.
+2. **¿Por qué sacaron `DOLARES` y `U_S_M2` de las variables predictoras `X`?**  
+   *Respuesta:* Porque `ES_GAMA_ALTA` se calculó directamente a partir de `U_S_M2` (`DOLARES / M2`). Dejarlas en `X` produciría **Data Leakage** (fuga de datos): el modelo memorizaría el corte numérico en vez de predecir el segmento a partir de la superficie, ubicación, ambientes y prestaciones.
+3. **¿Por qué el Accuracy del DummyClassifier es casi 75% y aun así es un mal modelo?**  
+   *Respuesta:* Porque como el target se definió en el percentil 75, el 75% de los datos son clase 0 (Estándar). Un modelo que predice siempre "Estándar" acierta el 75% de las veces pero tiene **0% de Recall y 0% de F1 en Gama Alta**. Por eso optimizamos y seleccionamos el modelo ganador usando **F1-Score** en lugar de Accuracy.
+4. **¿Por qué combinaron SQLite y MongoDB en vez de usar una sola base de datos?**  
+   *Respuesta:* Para aplicar persistencia políglota: el dataset limpio de `176.377` propiedades tiene un esquema tabular fijo ideal para consultas analíticas SQL en **SQLite** (**Tabla 1**), mientras que las salidas de experimentación (diccionarios de métricas, matrices anidadas, grillas de hiperparámetros variables de distintos algoritmos y logs de ejecución) son estructuras jerárquicas semiestructuradas que calzan de forma nativa en documentos JSON/BSON de **MongoDB** (**Tablas 2 y 3**).
