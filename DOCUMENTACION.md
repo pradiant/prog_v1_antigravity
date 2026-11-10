@@ -99,10 +99,10 @@ flowchart TD
 
     subgraph Inferencia_Persistencia ["6. Salidas y Entrega"]
         P --> Q["joblib.dump()<br/>app/modelo_ganador.joblib"]
-        P --> R["evaluation.py<br/>plot_and_save_confusion_matrix()"]
-        R --> S["logs/matriz_confusion_ganador.png"]
+        P --> R["evaluation.py & visualization.py<br/>Gráficos 300 DPI"]
+        R --> S["logs/*.png<br/>(matriz, importancia, correlación, target)"]
         P --> T[("MongoDB: taller_inmobiliario<br/>Colecciones: resultados, parametros, logs")]
-        Q --> U["app/app.py<br/>Dashboard Interactivo Streamlit"]
+        Q & S --> U["app/app.py<br/>Dashboard Interactivo Streamlit"]
     end
 ```
 
@@ -239,8 +239,11 @@ taller_integrador/
 │   ├── processed/                 # Almacenamiento intermedio de datasets procesados
 │   └── inmuebles.db               # Base de datos SQLite generada con las tablas del TP
 ├── logs/
-│   ├── pipeline.log               # Registro rotativo de eventos de ejecución
-│   └── matriz_confusion_ganador.png # Imagen en alta resolución de la matriz de confusión
+│   ├── pipeline.log                 # Registro rotativo de eventos de ejecución
+│   ├── matriz_confusion_ganador.png # Heatmap de la matriz de confusión (300 DPI)
+│   ├── correlacion_variables.png    # Heatmap de correlación de variables numéricas (300 DPI)
+│   ├── distribucion_target.png      # Gráfico de barras de clases ES_GAMA_ALTA (300 DPI)
+│   └── importancia_variables.png    # Top 15 variables más importantes del Random Forest (300 DPI)
 ├── notebooks/
 │   ├── 01_eda.ipynb               # Análisis Exploratorio de Datos (distribuciones, nulos)
 │   └── 02_modelado.ipynb          # Cuaderno interactivo de experimentación y evaluación
@@ -568,6 +571,19 @@ $$\text{Precision} = \frac{\text{VP}}{\text{VP} + \text{FP}} \quad \text{(De los
 $$\text{Recall} = \frac{\text{VP}}{\text{VP} + \text{FN}} \quad \text{(De todos los departamentos de Lujo reales, ¿cuántos descubrió?)}$$
 
 $$\text{F1-Score} = 2 \times \frac{\text{Precision} \times \text{Recall}}{\text{Precision} + \text{Recall}} \quad \text{(Media armónica equilibrada)}$$
+
+---
+
+### 9.7 Generación y Exportación de Visualizaciones (`src/visualization.py` y `src/evaluation.py`)
+
+Todos los gráficos estadísticos y de desempeño se construyen con `matplotlib` y `seaborn`, se invocan automáticamente al ejecutar `python main.py`, se exportan en alta resolución (`300 DPI`) dentro de la carpeta `logs/` y se visualizan en la **Pestaña 2 (`📊 Métricas y Modelo`)** de `app/app.py`:
+
+| Función | Módulo donde se define | Cuándo se ejecuta en `main.py` | Archivo PNG generado en disco (`300 DPI`) | Qué grafica |
+| :--- | :--- | :--- | :--- | :--- |
+| `plot_correlation_matrix(df, output_path)` | `src/visualization.py` | Paso 2 (tras limpiar el dataset) | `logs/correlacion_variables.png` | Mapa de calor (`cmap="coolwarm"`) de correlación de Pearson entre las variables numéricas. |
+| `plot_target_distribution(df, target_col, output_path)` | `src/visualization.py` | Paso 2 (tras crear `ES_GAMA_ALTA`) | `logs/distribucion_target.png` | Gráfico de barras con conteo y porcentaje de propiedades Estándar (`0`, 75%) vs. Gama Alta (`1`, 25%). |
+| `plot_and_save_confusion_matrix(y_true, y_pred, output_path)` | `src/evaluation.py` | Paso 7 (al evaluar el modelo ganador en Test) | `logs/matriz_confusion_ganador.png` | Heatmap anotado (`cmap="Blues"`) con VN, FP, FN y VP sobre las 35.276 muestras de prueba. |
+| `plot_feature_importances(feature_names, importances, top_n=15, output_path)` | `src/visualization.py` | Paso 7 (a partir de `feature_importances_` del Random Forest ganador) | `logs/importancia_variables.png` | Ranking de barras horizontales (`palette="viridis"`) con las 15 características más determinantes del modelo. |
 
 ---
 

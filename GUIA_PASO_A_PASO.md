@@ -309,12 +309,12 @@ flowchart TD
 
 ### Las 3 capas de visualización implementadas en el proyecto
 
-1. **Gráficos estadísticos estáticos (`src/visualization.py` y `src/evaluation.py`):**
-   - Construidos con `matplotlib` y `seaborn` (tema `whitegrid`, paleta `viridis`, exportación en alta resolución a `300 DPI`):
-     - `plot_price_distribution()`: Histograma + curva KDE de precios en USD y $\text{USD/m}^2$.
-     - `plot_top_barrios_gama_alta()`: Ranking horizontal de los 15 barrios con mayor proporción de Gama Alta vs. Estándar.
-     - `plot_correlation_heatmap()`: Matriz de correlación de Pearson con máscara triangular superior.
-     - `plot_and_save_confusion_matrix()`: Heatmap anotado en `logs/matriz_confusion_ganador.png`.
+1. **Gráficos estadísticos con `matplotlib` y `seaborn` (`src/evaluation.py` y `src/visualization.py`):**
+   Se ejecutan automáticamente desde `main.py`, se guardan en alta resolución (`300 DPI`) dentro de la carpeta **`logs/`** y se renderizan en la **Pestaña 2 de Streamlit (`app/app.py`)**:
+   - `plot_and_save_confusion_matrix()` (`src/evaluation.py`) $\rightarrow$ guarda **`logs/matriz_confusion_ganador.png`** (heatmap anotado de aciertos y errores sobre Test).
+   - `plot_correlation_matrix()` (`src/visualization.py`) $\rightarrow$ guarda **`logs/correlacion_variables.png`** (heatmap de correlación de Pearson entre variables numéricas).
+   - `plot_target_distribution()` (`src/visualization.py`) $\rightarrow$ guarda **`logs/distribucion_target.png`** (conteo y proporción 75% / 25% de `ES_GAMA_ALTA`).
+   - `plot_feature_importances()` (`src/visualization.py`) $\rightarrow$ guarda **`logs/importancia_variables.png`** (ranking horizontal con las 15 variables más influyentes del `RandomForestClassifier`).
 2. **Cuadernos interactivos (`notebooks/01_eda.ipynb` y `notebooks/02_modelado.ipynb`):**
    - Permiten reproducir paso a paso las visualizaciones exploratorias y la comparativa de clasificadores.
 3. **Aplicación Web en producción con Streamlit (`app/app.py`):**

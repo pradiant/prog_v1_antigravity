@@ -38,6 +38,11 @@ from src.models import (
     save_model,
 )
 from src.evaluation import plot_and_save_confusion_matrix
+from src.visualization import (
+    plot_correlation_matrix,
+    plot_target_distribution,
+    plot_feature_importances,
+)
 from src.db_sql import save_clean_dataset
 from src.db_mongo import (
     save_model_results_mongo,
@@ -65,6 +70,9 @@ def run_pipeline() -> None:
 
     model_output_path = BASE_DIR / "app" / "modelo_ganador.joblib"
     cm_output_path = BASE_DIR / "logs" / "matriz_confusion_ganador.png"
+    corr_output_path = BASE_DIR / "logs" / "correlacion_variables.png"
+    target_dist_output_path = BASE_DIR / "logs" / "distribucion_target.png"
+    feat_imp_output_path = BASE_DIR / "logs" / "importancia_variables.png"
 
     # 1. Carga y unificación de datos
     logger.info("[Paso 1/8] Cargando y unificando 16 datasets anuales...")
@@ -73,6 +81,10 @@ def run_pipeline() -> None:
     # 2. Limpieza, outliers y target de clasificación
     logger.info("[Paso 2/8] Ejecutando limpieza, tratamiento de outliers y target ES_GAMA_ALTA...")
     df_clean = clean_and_prepare_dataset(df_raw, quantile_threshold=0.75)
+
+    # Exportar visualizaciones exploratorias (correlación y distribución del target)
+    plot_correlation_matrix(df_clean, output_path=corr_output_path)
+    plot_target_distribution(df_clean, target_col="ES_GAMA_ALTA", output_path=target_dist_output_path)
 
     # 3. Persistencia en SQLite (exclusivamente el dataset limpio)
     logger.info("[Paso 3/8] Persistiendo dataset limpio en SQLite (tabla '%s')...", SQLITE_TABLE_CLEAN)
@@ -141,6 +153,18 @@ def run_pipeline() -> None:
         output_path=cm_output_path,
         title=f"Matriz de Confusión - {winner_name}",
     )
+
+    # Exportar importancia de variables si el modelo ganador la soporta
+    clf_step = winner_pipeline.named_steps.get("classifier")
+    prep_step = winner_pipeline.named_steps.get("preprocessor")
+    if clf_step is not None and hasattr(clf_step, "feature_importances_") and prep_step is not None:
+        feat_names = list(prep_step.get_feature_names_out())
+        plot_feature_importances(
+            feature_names=feat_names,
+            importances=clf_step.feature_importances_,
+            top_n=15,
+            output_path=feat_imp_output_path,
+        )
 
     # 8. Persistencia en MongoDB (resultados y parámetros)
     logger.info("[Paso 8/8] Persistiendo resultados y parámetros en MongoDB...")

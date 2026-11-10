@@ -32,6 +32,9 @@ st.set_page_config(
 
 MODEL_PATH = BASE_DIR / "app" / "modelo_ganador.joblib"
 CM_PATH = BASE_DIR / "logs" / "matriz_confusion_ganador.png"
+CORR_PATH = BASE_DIR / "logs" / "correlacion_variables.png"
+TARGET_DIST_PATH = BASE_DIR / "logs" / "distribucion_target.png"
+FEAT_IMP_PATH = BASE_DIR / "logs" / "importancia_variables.png"
 
 BARRIOS_CABA = sorted([
     "PALERMO", "RECOLETA", "BELGRANO", "CABALLITO", "ALMAGRO",
@@ -153,8 +156,18 @@ with tab_metricas:
         c3.metric("Recall (Weighted)", "79.26%")
         c4.metric("F1-Score (Weighted)", "80.13%")
 
-    if CM_PATH.exists():
-        st.image(str(CM_PATH), caption="Matriz de Confusión sobre Conjunto de Prueba", width=500)
+    st.divider()
+    col_g1, col_g2 = st.columns(2)
+    with col_g1:
+        if CM_PATH.exists():
+            st.image(str(CM_PATH), caption="Matriz de Confusión sobre Conjunto de Prueba", use_container_width=True)
+        if TARGET_DIST_PATH.exists():
+            st.image(str(TARGET_DIST_PATH), caption="Distribución de Clases (ES_GAMA_ALTA)", use_container_width=True)
+    with col_g2:
+        if FEAT_IMP_PATH.exists():
+            st.image(str(FEAT_IMP_PATH), caption="Top 15 Variables Más Importantes (Random Forest)", use_container_width=True)
+        if CORR_PATH.exists():
+            st.image(str(CORR_PATH), caption="Matriz de Correlación de Variables Numéricas", use_container_width=True)
 
 # ----------------- TAB 3: BASES DE DATOS (SQL & MONGO) -----------------
 with tab_datos:
