@@ -1,0 +1,429 @@
+2026-11-09 21:29:47,373 | INFO     | pipeline_main | ==================================================================
+2026-11-09 21:29:47,373 | INFO     | pipeline_main |  INICIANDO PIPELINE: CLASIFICACIÓN DE PROPIEDADES EN CABA
+2026-11-09 21:29:47,373 | INFO     | pipeline_main | ==================================================================
+2026-11-09 21:29:47,373 | INFO     | pipeline_main | [Paso 1/8] Cargando y unificando 16 datasets anuales...
+2026-11-09 21:29:47,373 | INFO     | src.data_loader | [2001] archivo encontrado: departamentos-en-venta-2001.csv
+2026-11-09 21:29:47,431 | INFO     | src.data_loader | [2001] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 21:29:47,432 | WARNING  | src.data_loader | [2001] 12911 filas con LAT/LON invertidas, se corrigen
+2026-11-09 21:29:47,433 | INFO     | src.data_loader | [2001] estandarizado: (12911, 17) -> (12911, 22)
+2026-11-09 21:29:47,433 | INFO     | src.data_loader | [2002] archivo encontrado: departamentos-en-venta-2002.csv
+2026-11-09 21:29:47,497 | INFO     | src.data_loader | [2002] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 21:29:47,498 | INFO     | src.data_loader | [2002] estandarizado: (7363, 17) -> (7363, 22)
+2026-11-09 21:29:47,498 | INFO     | src.data_loader | [2003] archivo encontrado: departamentos-en-venta-2003.csv
+2026-11-09 21:29:47,545 | INFO     | src.data_loader | [2003] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 21:29:47,547 | INFO     | src.data_loader | [2003] estandarizado: (13525, 17) -> (13525, 22)
+2026-11-09 21:29:47,547 | INFO     | src.data_loader | [2004] archivo encontrado: departamentos-en-venta-2004.csv
+2026-11-09 21:29:47,564 | INFO     | src.data_loader | [2004] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 21:29:47,564 | INFO     | src.data_loader | [2004] estandarizado: (4808, 17) -> (4808, 22)
+2026-11-09 21:29:47,565 | INFO     | src.data_loader | [2005] archivo encontrado: departamentos-en-venta-2005.csv
+2026-11-09 21:29:47,578 | INFO     | src.data_loader | [2005] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 21:29:47,579 | INFO     | src.data_loader | [2005] estandarizado: (3503, 17) -> (3503, 22)
+2026-11-09 21:29:47,580 | INFO     | src.data_loader | [2006] archivo encontrado: departamentos-en-venta-2006.csv
+2026-11-09 21:29:47,593 | INFO     | src.data_loader | [2006] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 21:29:47,594 | INFO     | src.data_loader | [2006] estandarizado: (3448, 17) -> (3448, 22)
+2026-11-09 21:29:47,594 | INFO     | src.data_loader | [2007] archivo encontrado: departamentos-en-venta-2007.csv
+2026-11-09 21:29:47,603 | WARNING  | src.data_loader | Línea descartada por formato inválido: ;;;;;;;;;;;;;;;;4400;58.0;33000;569.0;0;0;;;;0;;;PARQUE AVELLANEDA;9;
+2026-11-09 21:29:47,603 | WARNING  | src.data_loader | Línea descartada por formato inválido: ;;;;;;;;;;;;;;;;4200;49.0;36000;734.7;0;0;;;;0;;;VILLA LUGANO;8;
+2026-11-09 21:29:47,603 | WARNING  | src.data_loader | Línea descartada por formato inválido: ;;;;;;;;;;;;;;;;4600;72.0;56900;790.3;4;20;CONTRAFRENTE;;;0;SI;;VILLA LUGANO;8;
+2026-11-09 21:29:47,603 | WARNING  | src.data_loader | Línea descartada por formato inválido: ;;;;;;;;;;;;;;;;4700;62.0;40000;645.2;4;30;CONTRAFRENTE;;;0;;;VILLA LUGANO;8;
+2026-11-09 21:29:47,603 | WARNING  | src.data_loader | Línea descartada por formato inválido: ;;;;;;;;;;;;;;;;4900;70.0;34500;492.9;4;70;FRENTE;;;0;SI;;VILLA LUGANO;8;
+2026-11-09 21:29:47,627 | INFO     | src.data_loader | [2007] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 21:29:47,628 | INFO     | src.data_loader | [2007] estandarizado: (7910, 17) -> (7910, 22)
+2026-11-09 21:29:47,628 | INFO     | src.data_loader | [2008] archivo encontrado: departamentos-en-venta-2008.csv
+2026-11-09 21:29:47,656 | INFO     | src.data_loader | [2008] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 21:29:47,657 | INFO     | src.data_loader | [2008] estandarizado: (7524, 17) -> (7524, 22)
+2026-11-09 21:29:47,657 | INFO     | src.data_loader | [2009] archivo encontrado: departamentos-en-venta-2009.csv
+2026-11-09 21:29:47,743 | INFO     | src.data_loader | [2009] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 21:29:47,744 | INFO     | src.data_loader | [2009] estandarizado: (23614, 17) -> (23614, 22)
+2026-11-09 21:29:47,744 | INFO     | src.data_loader | [2010] archivo encontrado: departamentos-en-venta-2010.csv
+2026-11-09 21:29:47,827 | INFO     | src.data_loader | [2010] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 21:29:47,828 | INFO     | src.data_loader | [2010] estandarizado: (18466, 17) -> (18466, 22)
+2026-11-09 21:29:47,828 | INFO     | src.data_loader | [2011] archivo encontrado: departamentos-en-venta-2011.csv
+2026-11-09 21:29:47,925 | INFO     | src.data_loader | [2011] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 21:29:47,926 | INFO     | src.data_loader | [2011] estandarizado: (17314, 17) -> (17314, 22)
+2026-11-09 21:29:47,927 | INFO     | src.data_loader | [2012] archivo encontrado: departamentos-en-venta-2012.csv
+2026-11-09 21:29:47,960 | INFO     | src.data_loader | [2012] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 21:29:47,961 | INFO     | src.data_loader | [2012] estandarizado: (8828, 17) -> (8828, 22)
+2026-11-09 21:29:47,961 | INFO     | src.data_loader | [2013] archivo encontrado: departamentos-en-venta-2013.csv
+2026-11-09 21:29:48,052 | INFO     | src.data_loader | [2013] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 21:29:48,052 | WARNING  | src.data_loader | [2013] columnas no contempladas (se descartan): ['PESOS', 'PESOS_M2']
+2026-11-09 21:29:48,053 | INFO     | src.data_loader | [2013] estandarizado: (17576, 19) -> (17576, 22)
+2026-11-09 21:29:48,053 | INFO     | src.data_loader | [2014] archivo encontrado: departamentos-en-venta-2014.csv
+2026-11-09 21:29:48,106 | INFO     | src.data_loader | [2014] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 21:29:48,107 | INFO     | src.data_loader | [2014] estandarizado: (12724, 17) -> (12724, 22)
+2026-11-09 21:29:48,107 | INFO     | src.data_loader | [2015] archivo encontrado: departamentos-en-venta-2015.csv
+2026-11-09 21:29:48,190 | INFO     | src.data_loader | [2015] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'ORIENT']
+2026-11-09 21:29:48,191 | WARNING  | src.data_loader | [2015] columnas no contempladas (se descartan): ['ES_ESTRENAR', 'FRENTE_Y_CONTRA', 'EDIFICACION', 'DEPENDENCIA', 'OBS1', 'FUENTE', 'DIRECCION', 'NOMB_CA_CO', 'AV_SCORE', 'AV_SIDE', 'AREA', 'ZONA', 'BARRIO_NORMALIZADO', 'COMUNA_NORMALIZADA', 'CODIGO_POSTAL', 'CODIGO_POSTAL_ARGENTINO']
+2026-11-09 21:29:48,192 | INFO     | src.data_loader | [2015] estandarizado: (11414, 35) -> (11414, 22)
+2026-11-09 21:29:48,192 | INFO     | src.data_loader | [2016] archivo encontrado: departamentos-en-venta-2016.csv
+2026-11-09 21:29:48,266 | INFO     | src.data_loader | [2016] columnas ausentes (se rellenan con NaN): ['DORMITORIO', 'PISO', 'ORIENT', 'BAULERA', 'COCHERA', 'LAVADERO', 'TERRAZA']
+2026-11-09 21:29:48,267 | WARNING  | src.data_loader | [2016] columnas no contempladas (se descartan): ['ID_ZONAPRO', 'OPERACION', 'TIPO', 'PRECIOTEXT', 'PRECIOARS', 'PRECIOARSM', 'DIRECCION', 'LOCATION', 'PUBLICADO', 'PROCESADO', 'URL', 'REVISION', 'NOTA', 'CODIGO_POSTAL', 'CODIGO_POSTAL_ARGENTINO']
+2026-11-09 21:29:48,268 | INFO     | src.data_loader | [2016] estandarizado: (7564, 29) -> (7564, 22)
+2026-11-09 21:29:48,312 | INFO     | src.data_loader | Dataset unificado: 178492 filas, 22 columnas
+2026-11-09 21:29:48,314 | INFO     | src.data_loader | Coordenadas fuera de CABA en total: 150
+2026-11-09 21:29:48,314 | WARNING  | src.data_loader | [2012] 150 filas con coordenadas fuera de CABA
+2026-11-09 21:29:48,315 | INFO     | pipeline_main | [Paso 2/8] Ejecutando limpieza, tratamiento de outliers y target ES_GAMA_ALTA...
+2026-11-09 21:29:48,315 | INFO     | src.cleaning | Iniciando pipeline de limpieza completo...
+2026-11-09 21:29:48,359 | INFO     | src.cleaning | Filtro CABA: 178492 registros iniciales -> 176960 conservados (1532 descartados).
+2026-11-09 21:29:48,518 | INFO     | src.cleaning | Filtro de outliers: 176960 iniciales -> 176377 válidos (583 eliminados).
+2026-11-09 21:29:48,538 | INFO     | src.cleaning | Target 'ES_GAMA_ALTA' generado exitosamente (percentil=0.75): Clases: {0: 132157, 1: 44220}
+2026-11-09 21:29:48,538 | INFO     | src.cleaning | Pipeline de limpieza finalizado con éxito: 176377 filas resultantes.
+2026-11-09 21:29:48,546 | INFO     | pipeline_main | [Paso 3/8] Persistiendo Tabla 1 ('departamentos_limpios') en SQLite...
+2026-11-09 21:29:48,546 | INFO     | src.db_sql | Guardando Tabla 1 (departamentos_limpios): 176377 filas en inmuebles.db
+2026-11-09 21:29:49,012 | INFO     | src.db_sql | Tabla 1 guardada exitosamente.
+2026-11-09 21:29:49,012 | INFO     | pipeline_main | [Paso 4/8] Dividiendo datos en Train (80%) y Test (20%) estratificado...
+2026-11-09 21:29:49,015 | INFO     | src.features | Separación X / y completada: X=(176377, 10), y=(176377,)
+2026-11-09 21:29:49,101 | INFO     | pipeline_main | [Paso 5/8] Construyendo ColumnTransformer con imputadores, StandardScaler y OneHotEncoder...
+2026-11-09 21:29:49,101 | INFO     | src.features | Construyendo preprocesador: 8 variables numéricas, 2 categóricas.
+2026-11-09 21:29:49,101 | INFO     | pipeline_main | [Paso 6/8] Entrenando Modelo 1: Regresión Logística (Baseline)...
+2026-11-09 21:29:49,101 | INFO     | src.models | Pipeline de Regresión Logística creado.
+2026-11-09 21:29:50,253 | INFO     | pipeline_main | [Paso 6/8] Entrenando Modelo 2: Random Forest con GridSearchCV...
+2026-11-09 21:29:50,253 | INFO     | src.models | Pipeline de Random Forest creado.
+2026-11-09 21:29:50,261 | INFO     | src.models | Iniciando GridSearchCV (2 combinaciones, 3-fold cross-validation, métrica='f1_weighted')...
+2026-11-09 21:29:55,512 | INFO     | src.models | Mejores hiperparámetros: {'classifier__max_depth': 20, 'classifier__n_estimators': 100}
+2026-11-09 21:29:55,512 | INFO     | src.models | Mejor score (f1_weighted) en CV: 0.7962
+2026-11-09 21:29:58,663 | INFO     | pipeline_main | [Paso 7/8] Comparando modelos sobre conjunto de Test...
+2026-11-09 21:29:58,663 | INFO     | src.models | Evaluando modelo candidato: LogisticRegression
+2026-11-09 21:29:58,705 | INFO     | src.evaluation | Calculando métricas de clasificación sobre 35276 muestras...
+2026-11-09 21:29:58,734 | INFO     | src.evaluation | Métricas calculadas: Accuracy=0.7603 | Precision=0.8118 | Recall=0.7603 | F1=0.7736 | ROC-AUC=0.8343
+2026-11-09 21:29:58,734 | INFO     | src.models | Evaluando modelo candidato: RandomForest_Tuned
+2026-11-09 21:29:58,916 | INFO     | src.evaluation | Calculando métricas de clasificación sobre 35276 muestras...
+2026-11-09 21:29:58,944 | INFO     | src.evaluation | Métricas calculadas: Accuracy=0.7926 | Precision=0.8212 | Recall=0.7926 | F1=0.8013 | ROC-AUC=0.8556
+2026-11-09 21:29:58,944 | INFO     | src.models | Modelo ganador seleccionado: 'RandomForest_Tuned' con F1-Score ponderado de 0.8013
+2026-11-09 21:29:59,738 | INFO     | src.evaluation | Matriz de confusión guardada en: /Users/fer/Library/CloudStorage/GoogleDrive-f.galera.05@gmail.com/My Drive/z - Licenciatura/3er cuatrimestre 2-2026/03 - Programacion avanzada/z - TP/taller_integrador/logs/matriz_confusion_ganador.png
+2026-11-09 21:29:59,738 | INFO     | pipeline_main | [Paso 8/8] Persistiendo Tablas 2 y 3 en SQLite...
+2026-11-09 21:29:59,738 | INFO     | src.db_sql | Guardando Tabla 2 (predicciones y métricas globales) en inmuebles.db...
+2026-11-09 21:29:59,773 | INFO     | src.db_sql | Tabla 2 guardada con éxito: 35276 predicciones en 'modelo_predicciones' y métricas en 'modelo_metricas_globales'.
+2026-11-09 21:29:59,773 | INFO     | src.db_sql | Guardando Tabla 3 (parámetros y configuración) en inmuebles.db...
+2026-11-09 21:29:59,774 | INFO     | src.db_sql | Tabla 3 guardada exitosamente en 'modelo_parametros'.
+2026-11-09 21:29:59,775 | ERROR    | pipeline_main | Error fatal durante la ejecución del pipeline: name 'np' is not defined
+Traceback (most recent call last):
+  File "/Users/fer/Library/CloudStorage/GoogleDrive-f.galera.05@gmail.com/My Drive/z - Licenciatura/3er cuatrimestre 2-2026/03 - Programacion avanzada/z - TP/taller_integrador/main.py", line 177, in <module>
+    run_pipeline()
+  File "/Users/fer/Library/CloudStorage/GoogleDrive-f.galera.05@gmail.com/My Drive/z - Licenciatura/3er cuatrimestre 2-2026/03 - Programacion avanzada/z - TP/taller_integrador/main.py", line 155, in run_pipeline
+    if isinstance(v, (int, float, np.floating))
+                                  ^^
+NameError: name 'np' is not defined
+2026-11-09 21:32:01,805 | INFO     | pipeline_main | ==================================================================
+2026-11-09 21:32:01,805 | INFO     | pipeline_main |  INICIANDO PIPELINE: CLASIFICACIÓN DE PROPIEDADES EN CABA
+2026-11-09 21:32:01,805 | INFO     | pipeline_main | ==================================================================
+2026-11-09 21:32:01,805 | INFO     | pipeline_main | [Paso 1/8] Cargando y unificando 16 datasets anuales...
+2026-11-09 21:32:01,805 | INFO     | src.data_loader | [2001] archivo encontrado: departamentos-en-venta-2001.csv
+2026-11-09 21:32:01,855 | INFO     | src.data_loader | [2001] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 21:32:01,856 | WARNING  | src.data_loader | [2001] 12911 filas con LAT/LON invertidas, se corrigen
+2026-11-09 21:32:01,856 | INFO     | src.data_loader | [2001] estandarizado: (12911, 17) -> (12911, 22)
+2026-11-09 21:32:01,856 | INFO     | src.data_loader | [2002] archivo encontrado: departamentos-en-venta-2002.csv
+2026-11-09 21:32:01,883 | INFO     | src.data_loader | [2002] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 21:32:01,884 | INFO     | src.data_loader | [2002] estandarizado: (7363, 17) -> (7363, 22)
+2026-11-09 21:32:01,884 | INFO     | src.data_loader | [2003] archivo encontrado: departamentos-en-venta-2003.csv
+2026-11-09 21:32:01,930 | INFO     | src.data_loader | [2003] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 21:32:01,931 | INFO     | src.data_loader | [2003] estandarizado: (13525, 17) -> (13525, 22)
+2026-11-09 21:32:01,931 | INFO     | src.data_loader | [2004] archivo encontrado: departamentos-en-venta-2004.csv
+2026-11-09 21:32:01,977 | INFO     | src.data_loader | [2004] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 21:32:01,978 | INFO     | src.data_loader | [2004] estandarizado: (4808, 17) -> (4808, 22)
+2026-11-09 21:32:01,978 | INFO     | src.data_loader | [2005] archivo encontrado: departamentos-en-venta-2005.csv
+2026-11-09 21:32:01,999 | INFO     | src.data_loader | [2005] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 21:32:02,000 | INFO     | src.data_loader | [2005] estandarizado: (3503, 17) -> (3503, 22)
+2026-11-09 21:32:02,000 | INFO     | src.data_loader | [2006] archivo encontrado: departamentos-en-venta-2006.csv
+2026-11-09 21:32:02,015 | INFO     | src.data_loader | [2006] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 21:32:02,016 | INFO     | src.data_loader | [2006] estandarizado: (3448, 17) -> (3448, 22)
+2026-11-09 21:32:02,016 | INFO     | src.data_loader | [2007] archivo encontrado: departamentos-en-venta-2007.csv
+2026-11-09 21:32:02,026 | WARNING  | src.data_loader | Línea descartada por formato inválido: ;;;;;;;;;;;;;;;;4400;58.0;33000;569.0;0;0;;;;0;;;PARQUE AVELLANEDA;9;
+2026-11-09 21:32:02,026 | WARNING  | src.data_loader | Línea descartada por formato inválido: ;;;;;;;;;;;;;;;;4200;49.0;36000;734.7;0;0;;;;0;;;VILLA LUGANO;8;
+2026-11-09 21:32:02,026 | WARNING  | src.data_loader | Línea descartada por formato inválido: ;;;;;;;;;;;;;;;;4600;72.0;56900;790.3;4;20;CONTRAFRENTE;;;0;SI;;VILLA LUGANO;8;
+2026-11-09 21:32:02,026 | WARNING  | src.data_loader | Línea descartada por formato inválido: ;;;;;;;;;;;;;;;;4700;62.0;40000;645.2;4;30;CONTRAFRENTE;;;0;;;VILLA LUGANO;8;
+2026-11-09 21:32:02,026 | WARNING  | src.data_loader | Línea descartada por formato inválido: ;;;;;;;;;;;;;;;;4900;70.0;34500;492.9;4;70;FRENTE;;;0;SI;;VILLA LUGANO;8;
+2026-11-09 21:32:02,051 | INFO     | src.data_loader | [2007] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 21:32:02,052 | INFO     | src.data_loader | [2007] estandarizado: (7910, 17) -> (7910, 22)
+2026-11-09 21:32:02,052 | INFO     | src.data_loader | [2008] archivo encontrado: departamentos-en-venta-2008.csv
+2026-11-09 21:32:02,082 | INFO     | src.data_loader | [2008] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 21:32:02,084 | INFO     | src.data_loader | [2008] estandarizado: (7524, 17) -> (7524, 22)
+2026-11-09 21:32:02,084 | INFO     | src.data_loader | [2009] archivo encontrado: departamentos-en-venta-2009.csv
+2026-11-09 21:32:02,172 | INFO     | src.data_loader | [2009] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 21:32:02,173 | INFO     | src.data_loader | [2009] estandarizado: (23614, 17) -> (23614, 22)
+2026-11-09 21:32:02,173 | INFO     | src.data_loader | [2010] archivo encontrado: departamentos-en-venta-2010.csv
+2026-11-09 21:32:02,336 | INFO     | src.data_loader | [2010] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 21:32:02,338 | INFO     | src.data_loader | [2010] estandarizado: (18466, 17) -> (18466, 22)
+2026-11-09 21:32:02,338 | INFO     | src.data_loader | [2011] archivo encontrado: departamentos-en-venta-2011.csv
+2026-11-09 21:32:02,412 | INFO     | src.data_loader | [2011] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 21:32:02,414 | INFO     | src.data_loader | [2011] estandarizado: (17314, 17) -> (17314, 22)
+2026-11-09 21:32:02,414 | INFO     | src.data_loader | [2012] archivo encontrado: departamentos-en-venta-2012.csv
+2026-11-09 21:32:02,502 | INFO     | src.data_loader | [2012] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 21:32:02,503 | INFO     | src.data_loader | [2012] estandarizado: (8828, 17) -> (8828, 22)
+2026-11-09 21:32:02,503 | INFO     | src.data_loader | [2013] archivo encontrado: departamentos-en-venta-2013.csv
+2026-11-09 21:32:02,626 | INFO     | src.data_loader | [2013] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 21:32:02,627 | WARNING  | src.data_loader | [2013] columnas no contempladas (se descartan): ['PESOS', 'PESOS_M2']
+2026-11-09 21:32:02,628 | INFO     | src.data_loader | [2013] estandarizado: (17576, 19) -> (17576, 22)
+2026-11-09 21:32:02,628 | INFO     | src.data_loader | [2014] archivo encontrado: departamentos-en-venta-2014.csv
+2026-11-09 21:32:02,683 | INFO     | src.data_loader | [2014] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 21:32:02,684 | INFO     | src.data_loader | [2014] estandarizado: (12724, 17) -> (12724, 22)
+2026-11-09 21:32:02,684 | INFO     | src.data_loader | [2015] archivo encontrado: departamentos-en-venta-2015.csv
+2026-11-09 21:32:02,766 | INFO     | src.data_loader | [2015] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'ORIENT']
+2026-11-09 21:32:02,766 | WARNING  | src.data_loader | [2015] columnas no contempladas (se descartan): ['ES_ESTRENAR', 'FRENTE_Y_CONTRA', 'EDIFICACION', 'DEPENDENCIA', 'OBS1', 'FUENTE', 'DIRECCION', 'NOMB_CA_CO', 'AV_SCORE', 'AV_SIDE', 'AREA', 'ZONA', 'BARRIO_NORMALIZADO', 'COMUNA_NORMALIZADA', 'CODIGO_POSTAL', 'CODIGO_POSTAL_ARGENTINO']
+2026-11-09 21:32:02,767 | INFO     | src.data_loader | [2015] estandarizado: (11414, 35) -> (11414, 22)
+2026-11-09 21:32:02,767 | INFO     | src.data_loader | [2016] archivo encontrado: departamentos-en-venta-2016.csv
+2026-11-09 21:32:02,841 | INFO     | src.data_loader | [2016] columnas ausentes (se rellenan con NaN): ['DORMITORIO', 'PISO', 'ORIENT', 'BAULERA', 'COCHERA', 'LAVADERO', 'TERRAZA']
+2026-11-09 21:32:02,842 | WARNING  | src.data_loader | [2016] columnas no contempladas (se descartan): ['ID_ZONAPRO', 'OPERACION', 'TIPO', 'PRECIOTEXT', 'PRECIOARS', 'PRECIOARSM', 'DIRECCION', 'LOCATION', 'PUBLICADO', 'PROCESADO', 'URL', 'REVISION', 'NOTA', 'CODIGO_POSTAL', 'CODIGO_POSTAL_ARGENTINO']
+2026-11-09 21:32:02,844 | INFO     | src.data_loader | [2016] estandarizado: (7564, 29) -> (7564, 22)
+2026-11-09 21:32:02,882 | INFO     | src.data_loader | Dataset unificado: 178492 filas, 22 columnas
+2026-11-09 21:32:02,884 | INFO     | src.data_loader | Coordenadas fuera de CABA en total: 150
+2026-11-09 21:32:02,884 | WARNING  | src.data_loader | [2012] 150 filas con coordenadas fuera de CABA
+2026-11-09 21:32:02,885 | INFO     | pipeline_main | [Paso 2/8] Ejecutando limpieza, tratamiento de outliers y target ES_GAMA_ALTA...
+2026-11-09 21:32:02,885 | INFO     | src.cleaning | Iniciando pipeline de limpieza completo...
+2026-11-09 21:32:02,922 | INFO     | src.cleaning | Filtro CABA: 178492 registros iniciales -> 176960 conservados (1532 descartados).
+2026-11-09 21:32:03,072 | INFO     | src.cleaning | Filtro de outliers: 176960 iniciales -> 176377 válidos (583 eliminados).
+2026-11-09 21:32:03,089 | INFO     | src.cleaning | Target 'ES_GAMA_ALTA' generado exitosamente (percentil=0.75): Clases: {0: 132157, 1: 44220}
+2026-11-09 21:32:03,089 | INFO     | src.cleaning | Pipeline de limpieza finalizado con éxito: 176377 filas resultantes.
+2026-11-09 21:32:03,096 | INFO     | pipeline_main | [Paso 3/8] Persistiendo Tabla 1 ('departamentos_limpios') en SQLite...
+2026-11-09 21:32:03,096 | INFO     | src.db_sql | Guardando Tabla 1 (departamentos_limpios): 176377 filas en inmuebles.db
+2026-11-09 21:32:03,554 | INFO     | src.db_sql | Tabla 1 guardada exitosamente.
+2026-11-09 21:32:03,554 | INFO     | pipeline_main | [Paso 4/8] Dividiendo datos en Train (80%) y Test (20%) estratificado...
+2026-11-09 21:32:03,557 | INFO     | src.features | Separación X / y completada: X=(176377, 10), y=(176377,)
+2026-11-09 21:32:03,624 | INFO     | pipeline_main | [Paso 5/8] Construyendo ColumnTransformer con imputadores, StandardScaler y OneHotEncoder...
+2026-11-09 21:32:03,624 | INFO     | src.features | Construyendo preprocesador: 8 variables numéricas, 2 categóricas.
+2026-11-09 21:32:03,625 | INFO     | pipeline_main | [Paso 6/8] Entrenando Modelo 1: Regresión Logística (Baseline)...
+2026-11-09 21:32:03,625 | INFO     | src.models | Pipeline de Regresión Logística creado.
+2026-11-09 21:32:04,685 | INFO     | pipeline_main | [Paso 6/8] Entrenando Modelo 2: Random Forest con GridSearchCV...
+2026-11-09 21:32:04,685 | INFO     | src.models | Pipeline de Random Forest creado.
+2026-11-09 21:32:04,693 | INFO     | src.models | Iniciando GridSearchCV (2 combinaciones, 3-fold cross-validation, métrica='f1_weighted')...
+2026-11-09 21:32:09,217 | INFO     | src.models | Mejores hiperparámetros: {'classifier__max_depth': 20, 'classifier__n_estimators': 100}
+2026-11-09 21:32:09,217 | INFO     | src.models | Mejor score (f1_weighted) en CV: 0.7962
+2026-11-09 21:32:12,313 | INFO     | pipeline_main | [Paso 7/8] Comparando modelos sobre conjunto de Test...
+2026-11-09 21:32:12,313 | INFO     | src.models | Evaluando modelo candidato: LogisticRegression
+2026-11-09 21:32:12,356 | INFO     | src.evaluation | Calculando métricas de clasificación sobre 35276 muestras...
+2026-11-09 21:32:12,385 | INFO     | src.evaluation | Métricas calculadas: Accuracy=0.7603 | Precision=0.8118 | Recall=0.7603 | F1=0.7736 | ROC-AUC=0.8343
+2026-11-09 21:32:12,385 | INFO     | src.models | Evaluando modelo candidato: RandomForest_Tuned
+2026-11-09 21:32:12,622 | INFO     | src.evaluation | Calculando métricas de clasificación sobre 35276 muestras...
+2026-11-09 21:32:12,651 | INFO     | src.evaluation | Métricas calculadas: Accuracy=0.7926 | Precision=0.8212 | Recall=0.7926 | F1=0.8013 | ROC-AUC=0.8556
+2026-11-09 21:32:12,652 | INFO     | src.models | Modelo ganador seleccionado: 'RandomForest_Tuned' con F1-Score ponderado de 0.8013
+2026-11-09 21:32:13,052 | INFO     | src.evaluation | Matriz de confusión guardada en: /Users/fer/Library/CloudStorage/GoogleDrive-f.galera.05@gmail.com/My Drive/z - Licenciatura/3er cuatrimestre 2-2026/03 - Programacion avanzada/z - TP/taller_integrador/logs/matriz_confusion_ganador.png
+2026-11-09 21:32:13,052 | INFO     | pipeline_main | [Paso 8/8] Persistiendo Tablas 2 y 3 en SQLite...
+2026-11-09 21:32:13,052 | INFO     | src.db_sql | Guardando Tabla 2 (predicciones y métricas globales) en inmuebles.db...
+2026-11-09 21:32:13,084 | INFO     | src.db_sql | Tabla 2 guardada con éxito: 35276 predicciones en 'modelo_predicciones' y métricas en 'modelo_metricas_globales'.
+2026-11-09 21:32:13,085 | INFO     | src.db_sql | Guardando Tabla 3 (parámetros y configuración) en inmuebles.db...
+2026-11-09 21:32:13,086 | INFO     | src.db_sql | Tabla 3 guardada exitosamente en 'modelo_parametros'.
+2026-11-09 21:32:13,093 | INFO     | src.db_mongo | Conexión con MongoDB establecida exitosamente (mongodb://localhost:27017).
+2026-11-09 21:32:13,122 | INFO     | src.db_mongo | Experimento guardado en MongoDB con _id: 6af2660d621293188773cb2a
+2026-11-09 21:32:13,246 | INFO     | src.models | Modelo serializado exitosamente en: /Users/fer/Library/CloudStorage/GoogleDrive-f.galera.05@gmail.com/My Drive/z - Licenciatura/3er cuatrimestre 2-2026/03 - Programacion avanzada/z - TP/taller_integrador/app/modelo_ganador.joblib
+2026-11-09 21:32:13,246 | INFO     | pipeline_main | ==================================================================
+2026-11-09 21:32:13,246 | INFO     | pipeline_main |  ¡PIPELINE FINALIZADO CON ÉXITO!
+2026-11-09 21:32:13,246 | INFO     | pipeline_main |  Modelo Ganador: RandomForest_Tuned
+2026-11-09 21:32:13,246 | INFO     | pipeline_main |  Accuracy: 0.7926 | Precision: 0.8212 | Recall: 0.7926 | F1-Score: 0.8013
+2026-11-09 21:32:13,246 | INFO     | pipeline_main |  Base de Datos: /Users/fer/Library/CloudStorage/GoogleDrive-f.galera.05@gmail.com/My Drive/z - Licenciatura/3er cuatrimestre 2-2026/03 - Programacion avanzada/z - TP/taller_integrador/data/inmuebles.db
+2026-11-09 21:32:13,246 | INFO     | pipeline_main |  Para lanzar la aplicación web: streamlit run app/app.py
+2026-11-09 21:32:13,247 | INFO     | pipeline_main | ==================================================================
+2026-11-09 21:47:51,914 | INFO     | pipeline_main | ==================================================================
+2026-11-09 21:47:51,945 | INFO     | pipeline_main |  INICIANDO PIPELINE: CLASIFICACIÓN DE PROPIEDADES EN CABA
+2026-11-09 21:47:51,945 | INFO     | pipeline_main | ==================================================================
+2026-11-09 21:47:51,946 | INFO     | pipeline_main | [Paso 1/8] Cargando y unificando 16 datasets anuales...
+2026-11-09 21:47:51,946 | INFO     | src.data_loader | [2001] archivo encontrado: departamentos-en-venta-2001.csv
+2026-11-09 21:47:52,020 | INFO     | src.data_loader | [2001] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 21:47:52,021 | WARNING  | src.data_loader | [2001] 12911 filas con LAT/LON invertidas, se corrigen
+2026-11-09 21:47:52,025 | INFO     | src.data_loader | [2001] estandarizado: (12911, 17) -> (12911, 22)
+2026-11-09 21:47:52,026 | INFO     | src.data_loader | [2002] archivo encontrado: departamentos-en-venta-2002.csv
+2026-11-09 21:47:52,054 | INFO     | src.data_loader | [2002] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 21:47:52,055 | INFO     | src.data_loader | [2002] estandarizado: (7363, 17) -> (7363, 22)
+2026-11-09 21:47:52,056 | INFO     | src.data_loader | [2003] archivo encontrado: departamentos-en-venta-2003.csv
+2026-11-09 21:47:52,104 | INFO     | src.data_loader | [2003] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 21:47:52,106 | INFO     | src.data_loader | [2003] estandarizado: (13525, 17) -> (13525, 22)
+2026-11-09 21:47:52,108 | INFO     | src.data_loader | [2004] archivo encontrado: departamentos-en-venta-2004.csv
+2026-11-09 21:47:52,157 | INFO     | src.data_loader | [2004] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 21:47:52,162 | INFO     | src.data_loader | [2004] estandarizado: (4808, 17) -> (4808, 22)
+2026-11-09 21:47:52,163 | INFO     | src.data_loader | [2005] archivo encontrado: departamentos-en-venta-2005.csv
+2026-11-09 21:47:52,178 | INFO     | src.data_loader | [2005] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 21:47:52,179 | INFO     | src.data_loader | [2005] estandarizado: (3503, 17) -> (3503, 22)
+2026-11-09 21:47:52,180 | INFO     | src.data_loader | [2006] archivo encontrado: departamentos-en-venta-2006.csv
+2026-11-09 21:47:52,194 | INFO     | src.data_loader | [2006] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 21:47:52,196 | INFO     | src.data_loader | [2006] estandarizado: (3448, 17) -> (3448, 22)
+2026-11-09 21:47:52,197 | INFO     | src.data_loader | [2007] archivo encontrado: departamentos-en-venta-2007.csv
+2026-11-09 21:47:52,206 | WARNING  | src.data_loader | Línea descartada por formato inválido: ;;;;;;;;;;;;;;;;4400;58.0;33000;569.0;0;0;;;;0;;;PARQUE AVELLANEDA;9;
+2026-11-09 21:47:52,206 | WARNING  | src.data_loader | Línea descartada por formato inválido: ;;;;;;;;;;;;;;;;4200;49.0;36000;734.7;0;0;;;;0;;;VILLA LUGANO;8;
+2026-11-09 21:47:52,207 | WARNING  | src.data_loader | Línea descartada por formato inválido: ;;;;;;;;;;;;;;;;4600;72.0;56900;790.3;4;20;CONTRAFRENTE;;;0;SI;;VILLA LUGANO;8;
+2026-11-09 21:47:52,207 | WARNING  | src.data_loader | Línea descartada por formato inválido: ;;;;;;;;;;;;;;;;4700;62.0;40000;645.2;4;30;CONTRAFRENTE;;;0;;;VILLA LUGANO;8;
+2026-11-09 21:47:52,207 | WARNING  | src.data_loader | Línea descartada por formato inválido: ;;;;;;;;;;;;;;;;4900;70.0;34500;492.9;4;70;FRENTE;;;0;SI;;VILLA LUGANO;8;
+2026-11-09 21:47:52,230 | INFO     | src.data_loader | [2007] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 21:47:52,232 | INFO     | src.data_loader | [2007] estandarizado: (7910, 17) -> (7910, 22)
+2026-11-09 21:47:52,232 | INFO     | src.data_loader | [2008] archivo encontrado: departamentos-en-venta-2008.csv
+2026-11-09 21:47:52,260 | INFO     | src.data_loader | [2008] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 21:47:52,262 | INFO     | src.data_loader | [2008] estandarizado: (7524, 17) -> (7524, 22)
+2026-11-09 21:47:52,263 | INFO     | src.data_loader | [2009] archivo encontrado: departamentos-en-venta-2009.csv
+2026-11-09 21:47:52,350 | INFO     | src.data_loader | [2009] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 21:47:52,352 | INFO     | src.data_loader | [2009] estandarizado: (23614, 17) -> (23614, 22)
+2026-11-09 21:47:52,354 | INFO     | src.data_loader | [2010] archivo encontrado: departamentos-en-venta-2010.csv
+2026-11-09 21:47:52,425 | INFO     | src.data_loader | [2010] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 21:47:52,427 | INFO     | src.data_loader | [2010] estandarizado: (18466, 17) -> (18466, 22)
+2026-11-09 21:47:52,428 | INFO     | src.data_loader | [2011] archivo encontrado: departamentos-en-venta-2011.csv
+2026-11-09 21:47:52,490 | INFO     | src.data_loader | [2011] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 21:47:52,492 | INFO     | src.data_loader | [2011] estandarizado: (17314, 17) -> (17314, 22)
+2026-11-09 21:47:52,493 | INFO     | src.data_loader | [2012] archivo encontrado: departamentos-en-venta-2012.csv
+2026-11-09 21:47:52,558 | INFO     | src.data_loader | [2012] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 21:47:52,560 | INFO     | src.data_loader | [2012] estandarizado: (8828, 17) -> (8828, 22)
+2026-11-09 21:47:52,561 | INFO     | src.data_loader | [2013] archivo encontrado: departamentos-en-venta-2013.csv
+2026-11-09 21:47:52,637 | INFO     | src.data_loader | [2013] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 21:47:52,639 | WARNING  | src.data_loader | [2013] columnas no contempladas (se descartan): ['PESOS', 'PESOS_M2']
+2026-11-09 21:47:52,641 | INFO     | src.data_loader | [2013] estandarizado: (17576, 19) -> (17576, 22)
+2026-11-09 21:47:52,641 | INFO     | src.data_loader | [2014] archivo encontrado: departamentos-en-venta-2014.csv
+2026-11-09 21:47:52,690 | INFO     | src.data_loader | [2014] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 21:47:52,692 | INFO     | src.data_loader | [2014] estandarizado: (12724, 17) -> (12724, 22)
+2026-11-09 21:47:52,693 | INFO     | src.data_loader | [2015] archivo encontrado: departamentos-en-venta-2015.csv
+2026-11-09 21:47:52,772 | INFO     | src.data_loader | [2015] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'ORIENT']
+2026-11-09 21:47:52,773 | WARNING  | src.data_loader | [2015] columnas no contempladas (se descartan): ['ES_ESTRENAR', 'FRENTE_Y_CONTRA', 'EDIFICACION', 'DEPENDENCIA', 'OBS1', 'FUENTE', 'DIRECCION', 'NOMB_CA_CO', 'AV_SCORE', 'AV_SIDE', 'AREA', 'ZONA', 'BARRIO_NORMALIZADO', 'COMUNA_NORMALIZADA', 'CODIGO_POSTAL', 'CODIGO_POSTAL_ARGENTINO']
+2026-11-09 21:47:52,774 | INFO     | src.data_loader | [2015] estandarizado: (11414, 35) -> (11414, 22)
+2026-11-09 21:47:52,776 | INFO     | src.data_loader | [2016] archivo encontrado: departamentos-en-venta-2016.csv
+2026-11-09 21:47:52,829 | INFO     | src.data_loader | [2016] columnas ausentes (se rellenan con NaN): ['DORMITORIO', 'PISO', 'ORIENT', 'BAULERA', 'COCHERA', 'LAVADERO', 'TERRAZA']
+2026-11-09 21:47:52,830 | WARNING  | src.data_loader | [2016] columnas no contempladas (se descartan): ['ID_ZONAPRO', 'OPERACION', 'TIPO', 'PRECIOTEXT', 'PRECIOARS', 'PRECIOARSM', 'DIRECCION', 'LOCATION', 'PUBLICADO', 'PROCESADO', 'URL', 'REVISION', 'NOTA', 'CODIGO_POSTAL', 'CODIGO_POSTAL_ARGENTINO']
+2026-11-09 21:47:52,831 | INFO     | src.data_loader | [2016] estandarizado: (7564, 29) -> (7564, 22)
+2026-11-09 21:47:52,871 | INFO     | src.data_loader | Dataset unificado: 178492 filas, 22 columnas
+2026-11-09 21:47:52,875 | INFO     | src.data_loader | Coordenadas fuera de CABA en total: 150
+2026-11-09 21:47:52,875 | WARNING  | src.data_loader | [2012] 150 filas con coordenadas fuera de CABA
+2026-11-09 21:47:52,876 | INFO     | pipeline_main | [Paso 2/8] Ejecutando limpieza, tratamiento de outliers y target ES_GAMA_ALTA...
+2026-11-09 21:47:52,877 | INFO     | src.cleaning | Iniciando pipeline de limpieza completo...
+2026-11-09 21:47:52,925 | INFO     | src.cleaning | Filtro CABA: 178492 registros iniciales -> 176960 conservados (1532 descartados).
+2026-11-09 21:47:53,097 | INFO     | src.cleaning | Filtro de outliers: 176960 iniciales -> 176377 válidos (583 eliminados).
+2026-11-09 21:47:53,118 | INFO     | src.cleaning | Target 'ES_GAMA_ALTA' generado exitosamente (percentil=0.75): Clases: {0: 132157, 1: 44220}
+2026-11-09 21:47:53,119 | INFO     | src.cleaning | Pipeline de limpieza finalizado con éxito: 176377 filas resultantes.
+2026-11-09 21:47:53,126 | INFO     | pipeline_main | [Paso 3/8] Persistiendo dataset limpio en SQLite (tabla 'departamentos_limpios')...
+2026-11-09 21:47:53,127 | INFO     | src.db_sql | Guardando dataset limpio en SQLite (inmuebles.db -> tabla 'departamentos_limpios'): 176377 filas.
+2026-11-09 21:47:53,572 | INFO     | src.db_sql | Dataset limpio guardado exitosamente en SQLite.
+2026-11-09 21:47:53,573 | INFO     | pipeline_main | [Paso 4/8] Dividiendo datos en Train (80%) y Test (20%) estratificado...
+2026-11-09 21:47:53,576 | INFO     | src.features | Separación X / y completada: X=(176377, 10), y=(176377,)
+2026-11-09 21:47:53,632 | INFO     | pipeline_main | [Paso 5/8] Construyendo ColumnTransformer con imputadores, StandardScaler y OneHotEncoder...
+2026-11-09 21:47:53,633 | INFO     | src.features | Construyendo preprocesador: 8 variables numéricas, 2 categóricas.
+2026-11-09 21:47:53,634 | INFO     | pipeline_main | [Paso 6/8] Entrenando Modelo 1: Regresión Logística (Baseline)...
+2026-11-09 21:47:53,634 | INFO     | src.models | Pipeline de Regresión Logística creado.
+2026-11-09 21:47:54,669 | INFO     | pipeline_main | [Paso 6/8] Entrenando Modelo 2: Random Forest con GridSearchCV...
+2026-11-09 21:47:54,671 | INFO     | src.models | Pipeline de Random Forest creado.
+2026-11-09 21:47:54,679 | INFO     | src.models | Iniciando GridSearchCV (2 combinaciones, 3-fold cross-validation, métrica='f1_weighted')...
+2026-11-09 21:47:59,635 | INFO     | src.models | Mejores hiperparámetros: {'classifier__max_depth': 20, 'classifier__n_estimators': 100}
+2026-11-09 21:47:59,636 | INFO     | src.models | Mejor score (f1_weighted) en CV: 0.7962
+2026-11-09 21:48:02,852 | INFO     | pipeline_main | [Paso 7/8] Comparando modelos sobre conjunto de Test...
+2026-11-09 21:48:02,853 | INFO     | src.models | Evaluando modelo candidato: LogisticRegression
+2026-11-09 21:48:02,896 | INFO     | src.evaluation | Calculando métricas de clasificación sobre 35276 muestras...
+2026-11-09 21:48:02,929 | INFO     | src.evaluation | Métricas calculadas: Accuracy=0.7603 | Precision=0.8118 | Recall=0.7603 | F1=0.7736 | ROC-AUC=0.8343
+2026-11-09 21:48:02,929 | INFO     | src.models | Evaluando modelo candidato: RandomForest_Tuned
+2026-11-09 21:48:03,113 | INFO     | src.evaluation | Calculando métricas de clasificación sobre 35276 muestras...
+2026-11-09 21:48:03,141 | INFO     | src.evaluation | Métricas calculadas: Accuracy=0.7926 | Precision=0.8212 | Recall=0.7926 | F1=0.8013 | ROC-AUC=0.8556
+2026-11-09 21:48:03,142 | INFO     | src.models | Modelo ganador seleccionado: 'RandomForest_Tuned' con F1-Score ponderado de 0.8013
+2026-11-09 21:48:03,520 | INFO     | src.evaluation | Matriz de confusión guardada en: /Users/fer/Library/CloudStorage/GoogleDrive-f.galera.05@gmail.com/My Drive/z - Licenciatura/3er cuatrimestre 2-2026/03 - Programacion avanzada/z - TP/taller_integrador/logs/matriz_confusion_ganador.png
+2026-11-09 21:48:03,521 | INFO     | pipeline_main | [Paso 8/8] Persistiendo resultados y parámetros en MongoDB...
+2026-11-09 21:48:03,553 | INFO     | src.db_mongo | Resultados del modelo guardados en MongoDB [Colección 'resultados', _id: 6af269c3f90e145e445f15b0]
+2026-11-09 21:48:03,581 | INFO     | src.db_mongo | Parámetros del modelo guardados en MongoDB [Colección 'parametros', _id: 6af269c3f90e145e445f15b4]
+2026-11-09 21:48:03,641 | INFO     | src.models | Modelo serializado exitosamente en: /Users/fer/Library/CloudStorage/GoogleDrive-f.galera.05@gmail.com/My Drive/z - Licenciatura/3er cuatrimestre 2-2026/03 - Programacion avanzada/z - TP/taller_integrador/app/modelo_ganador.joblib
+2026-11-09 21:48:03,643 | INFO     | pipeline_main | ==================================================================
+2026-11-09 21:48:03,643 | INFO     | pipeline_main |  ¡PIPELINE FINALIZADO CON ÉXITO!
+2026-11-09 21:48:03,643 | INFO     | pipeline_main |  Modelo Ganador: RandomForest_Tuned
+2026-11-09 21:48:03,643 | INFO     | pipeline_main |  Accuracy: 0.7926 | Precision: 0.8212 | Recall: 0.7926 | F1-Score: 0.8013
+2026-11-09 21:48:03,644 | INFO     | pipeline_main |  SQLite: dataset limpio guardado en /Users/fer/Library/CloudStorage/GoogleDrive-f.galera.05@gmail.com/My Drive/z - Licenciatura/3er cuatrimestre 2-2026/03 - Programacion avanzada/z - TP/taller_integrador/data/inmuebles.db (tabla 'departamentos_limpios')
+2026-11-09 21:48:03,644 | INFO     | pipeline_main |  MongoDB: resultados y parámetros guardados en mongodb://localhost:27017 (db: taller_inmobiliario)
+2026-11-09 21:48:03,644 | INFO     | pipeline_main |  Para lanzar la aplicación web: streamlit run app/app.py
+2026-11-09 21:48:03,645 | INFO     | pipeline_main | ==================================================================
+2026-11-09 21:55:02,966 | INFO     | pipeline_main | ==================================================================
+2026-11-09 21:55:02,973 | INFO     | pipeline_main |  INICIANDO PIPELINE: CLASIFICACIÓN DE PROPIEDADES EN CABA
+2026-11-09 21:55:02,974 | INFO     | pipeline_main | ==================================================================
+2026-11-09 21:55:02,974 | INFO     | pipeline_main | [Paso 1/8] Cargando y unificando 16 datasets anuales...
+2026-11-09 21:55:02,974 | INFO     | src.data_loader | [2001] archivo encontrado: departamentos-en-venta-2001.csv
+2026-11-09 21:55:03,028 | INFO     | src.data_loader | [2001] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 21:55:03,030 | WARNING  | src.data_loader | [2001] 12911 filas con LAT/LON invertidas, se corrigen
+2026-11-09 21:55:03,031 | INFO     | src.data_loader | [2001] estandarizado: (12911, 17) -> (12911, 22)
+2026-11-09 21:55:03,031 | INFO     | src.data_loader | [2002] archivo encontrado: departamentos-en-venta-2002.csv
+2026-11-09 21:55:03,061 | INFO     | src.data_loader | [2002] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 21:55:03,063 | INFO     | src.data_loader | [2002] estandarizado: (7363, 17) -> (7363, 22)
+2026-11-09 21:55:03,063 | INFO     | src.data_loader | [2003] archivo encontrado: departamentos-en-venta-2003.csv
+2026-11-09 21:55:03,113 | INFO     | src.data_loader | [2003] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 21:55:03,115 | INFO     | src.data_loader | [2003] estandarizado: (13525, 17) -> (13525, 22)
+2026-11-09 21:55:03,115 | INFO     | src.data_loader | [2004] archivo encontrado: departamentos-en-venta-2004.csv
+2026-11-09 21:55:03,164 | INFO     | src.data_loader | [2004] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 21:55:03,166 | INFO     | src.data_loader | [2004] estandarizado: (4808, 17) -> (4808, 22)
+2026-11-09 21:55:03,167 | INFO     | src.data_loader | [2005] archivo encontrado: departamentos-en-venta-2005.csv
+2026-11-09 21:55:03,183 | INFO     | src.data_loader | [2005] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 21:55:03,185 | INFO     | src.data_loader | [2005] estandarizado: (3503, 17) -> (3503, 22)
+2026-11-09 21:55:03,186 | INFO     | src.data_loader | [2006] archivo encontrado: departamentos-en-venta-2006.csv
+2026-11-09 21:55:03,201 | INFO     | src.data_loader | [2006] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 21:55:03,202 | INFO     | src.data_loader | [2006] estandarizado: (3448, 17) -> (3448, 22)
+2026-11-09 21:55:03,203 | INFO     | src.data_loader | [2007] archivo encontrado: departamentos-en-venta-2007.csv
+2026-11-09 21:55:03,213 | WARNING  | src.data_loader | Línea descartada por formato inválido: ;;;;;;;;;;;;;;;;4400;58.0;33000;569.0;0;0;;;;0;;;PARQUE AVELLANEDA;9;
+2026-11-09 21:55:03,214 | WARNING  | src.data_loader | Línea descartada por formato inválido: ;;;;;;;;;;;;;;;;4200;49.0;36000;734.7;0;0;;;;0;;;VILLA LUGANO;8;
+2026-11-09 21:55:03,215 | WARNING  | src.data_loader | Línea descartada por formato inválido: ;;;;;;;;;;;;;;;;4600;72.0;56900;790.3;4;20;CONTRAFRENTE;;;0;SI;;VILLA LUGANO;8;
+2026-11-09 21:55:03,215 | WARNING  | src.data_loader | Línea descartada por formato inválido: ;;;;;;;;;;;;;;;;4700;62.0;40000;645.2;4;30;CONTRAFRENTE;;;0;;;VILLA LUGANO;8;
+2026-11-09 21:55:03,215 | WARNING  | src.data_loader | Línea descartada por formato inválido: ;;;;;;;;;;;;;;;;4900;70.0;34500;492.9;4;70;FRENTE;;;0;SI;;VILLA LUGANO;8;
+2026-11-09 21:55:03,245 | INFO     | src.data_loader | [2007] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 21:55:03,247 | INFO     | src.data_loader | [2007] estandarizado: (7910, 17) -> (7910, 22)
+2026-11-09 21:55:03,248 | INFO     | src.data_loader | [2008] archivo encontrado: departamentos-en-venta-2008.csv
+2026-11-09 21:55:03,281 | INFO     | src.data_loader | [2008] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 21:55:03,282 | INFO     | src.data_loader | [2008] estandarizado: (7524, 17) -> (7524, 22)
+2026-11-09 21:55:03,283 | INFO     | src.data_loader | [2009] archivo encontrado: departamentos-en-venta-2009.csv
+2026-11-09 21:55:03,375 | INFO     | src.data_loader | [2009] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 21:55:03,379 | INFO     | src.data_loader | [2009] estandarizado: (23614, 17) -> (23614, 22)
+2026-11-09 21:55:03,380 | INFO     | src.data_loader | [2010] archivo encontrado: departamentos-en-venta-2010.csv
+2026-11-09 21:55:03,455 | INFO     | src.data_loader | [2010] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 21:55:03,457 | INFO     | src.data_loader | [2010] estandarizado: (18466, 17) -> (18466, 22)
+2026-11-09 21:55:03,457 | INFO     | src.data_loader | [2011] archivo encontrado: departamentos-en-venta-2011.csv
+2026-11-09 21:55:03,523 | INFO     | src.data_loader | [2011] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 21:55:03,525 | INFO     | src.data_loader | [2011] estandarizado: (17314, 17) -> (17314, 22)
+2026-11-09 21:55:03,525 | INFO     | src.data_loader | [2012] archivo encontrado: departamentos-en-venta-2012.csv
+2026-11-09 21:55:03,588 | INFO     | src.data_loader | [2012] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 21:55:03,593 | INFO     | src.data_loader | [2012] estandarizado: (8828, 17) -> (8828, 22)
+2026-11-09 21:55:03,593 | INFO     | src.data_loader | [2013] archivo encontrado: departamentos-en-venta-2013.csv
+2026-11-09 21:55:03,669 | INFO     | src.data_loader | [2013] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 21:55:03,670 | WARNING  | src.data_loader | [2013] columnas no contempladas (se descartan): ['PESOS', 'PESOS_M2']
+2026-11-09 21:55:03,671 | INFO     | src.data_loader | [2013] estandarizado: (17576, 19) -> (17576, 22)
+2026-11-09 21:55:03,672 | INFO     | src.data_loader | [2014] archivo encontrado: departamentos-en-venta-2014.csv
+2026-11-09 21:55:03,724 | INFO     | src.data_loader | [2014] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 21:55:03,726 | INFO     | src.data_loader | [2014] estandarizado: (12724, 17) -> (12724, 22)
+2026-11-09 21:55:03,726 | INFO     | src.data_loader | [2015] archivo encontrado: departamentos-en-venta-2015.csv
+2026-11-09 21:55:03,816 | INFO     | src.data_loader | [2015] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'ORIENT']
+2026-11-09 21:55:03,816 | WARNING  | src.data_loader | [2015] columnas no contempladas (se descartan): ['ES_ESTRENAR', 'FRENTE_Y_CONTRA', 'EDIFICACION', 'DEPENDENCIA', 'OBS1', 'FUENTE', 'DIRECCION', 'NOMB_CA_CO', 'AV_SCORE', 'AV_SIDE', 'AREA', 'ZONA', 'BARRIO_NORMALIZADO', 'COMUNA_NORMALIZADA', 'CODIGO_POSTAL', 'CODIGO_POSTAL_ARGENTINO']
+2026-11-09 21:55:03,818 | INFO     | src.data_loader | [2015] estandarizado: (11414, 35) -> (11414, 22)
+2026-11-09 21:55:03,818 | INFO     | src.data_loader | [2016] archivo encontrado: departamentos-en-venta-2016.csv
+2026-11-09 21:55:03,873 | INFO     | src.data_loader | [2016] columnas ausentes (se rellenan con NaN): ['DORMITORIO', 'PISO', 'ORIENT', 'BAULERA', 'COCHERA', 'LAVADERO', 'TERRAZA']
+2026-11-09 21:55:03,874 | WARNING  | src.data_loader | [2016] columnas no contempladas (se descartan): ['ID_ZONAPRO', 'OPERACION', 'TIPO', 'PRECIOTEXT', 'PRECIOARS', 'PRECIOARSM', 'DIRECCION', 'LOCATION', 'PUBLICADO', 'PROCESADO', 'URL', 'REVISION', 'NOTA', 'CODIGO_POSTAL', 'CODIGO_POSTAL_ARGENTINO']
+2026-11-09 21:55:03,876 | INFO     | src.data_loader | [2016] estandarizado: (7564, 29) -> (7564, 22)
+2026-11-09 21:55:03,913 | INFO     | src.data_loader | Dataset unificado: 178492 filas, 22 columnas
+2026-11-09 21:55:03,916 | INFO     | src.data_loader | Coordenadas fuera de CABA en total: 150
+2026-11-09 21:55:03,917 | WARNING  | src.data_loader | [2012] 150 filas con coordenadas fuera de CABA
+2026-11-09 21:55:03,918 | INFO     | pipeline_main | [Paso 2/8] Ejecutando limpieza, tratamiento de outliers y target ES_GAMA_ALTA...
+2026-11-09 21:55:03,918 | INFO     | src.cleaning | Iniciando pipeline de limpieza completo...
+2026-11-09 21:55:03,958 | INFO     | src.cleaning | Filtro CABA: 178492 registros iniciales -> 176960 conservados (1532 descartados).
+2026-11-09 21:55:04,115 | INFO     | src.cleaning | Filtro de outliers: 176960 iniciales -> 176377 válidos (583 eliminados).
+2026-11-09 21:55:04,134 | INFO     | src.cleaning | Target 'ES_GAMA_ALTA' generado exitosamente (percentil=0.75): Clases: {0: 132157, 1: 44220}
+2026-11-09 21:55:04,135 | INFO     | src.cleaning | Pipeline de limpieza finalizado con éxito: 176377 filas resultantes.
+2026-11-09 21:55:04,141 | INFO     | pipeline_main | [Paso 3/8] Persistiendo dataset limpio en SQLite (tabla 'departamentos_limpios')...
+2026-11-09 21:55:04,142 | INFO     | src.db_sql | Guardando dataset limpio en SQLite (inmuebles.db -> tabla 'departamentos_limpios'): 176377 filas.
+2026-11-09 21:55:04,587 | INFO     | src.db_sql | Dataset limpio guardado exitosamente en SQLite.
+2026-11-09 21:55:04,588 | INFO     | pipeline_main | [Paso 4/8] Dividiendo datos en Train (80%) y Test (20%) estratificado...
+2026-11-09 21:55:04,591 | INFO     | src.features | Separación X / y completada: X=(176377, 10), y=(176377,)
+2026-11-09 21:55:04,640 | INFO     | pipeline_main | [Paso 5/8] Construyendo ColumnTransformer con imputadores, StandardScaler y OneHotEncoder...
+2026-11-09 21:55:04,645 | INFO     | src.features | Construyendo preprocesador: 8 variables numéricas, 2 categóricas.
+2026-11-09 21:55:04,646 | INFO     | pipeline_main | [Paso 6/8] Entrenando Modelo Base Ingenuo: DummyClassifier (Most Frequent)...
+2026-11-09 21:55:04,646 | INFO     | src.models | Pipeline de DummyClassifier (strategy='most_frequent') creado.
+2026-11-09 21:55:04,798 | INFO     | pipeline_main | [Paso 6/8] Entrenando Modelo 1: Regresión Logística (Baseline Lineal)...
+2026-11-09 21:55:04,799 | INFO     | src.models | Pipeline de Regresión Logística creado.
+2026-11-09 21:55:05,879 | INFO     | pipeline_main | [Paso 6/8] Entrenando Modelo 2: Random Forest con GridSearchCV...
+2026-11-09 21:55:05,880 | INFO     | src.models | Pipeline de Random Forest creado.
+2026-11-09 21:55:05,888 | INFO     | src.models | Iniciando GridSearchCV (2 combinaciones, 3-fold cross-validation, métrica='f1_weighted')...
+2026-11-09 21:55:10,333 | INFO     | src.models | Mejores hiperparámetros: {'classifier__max_depth': 20, 'classifier__n_estimators': 100}
+2026-11-09 21:55:10,334 | INFO     | src.models | Mejor score (f1_weighted) en CV: 0.7962
+2026-11-09 21:55:13,181 | INFO     | pipeline_main | [Paso 7/8] Comparando modelos sobre conjunto de Test...
+2026-11-09 21:55:13,182 | INFO     | src.models | Evaluando modelo candidato: DummyClassifier
+2026-11-09 21:55:13,222 | INFO     | src.evaluation | Calculando métricas de clasificación sobre 35276 muestras...
+2026-11-09 21:55:13,253 | INFO     | src.evaluation | Métricas calculadas: Accuracy=0.7493 | Precision=0.5614 | Recall=0.7493 | F1=0.6419 | ROC-AUC=0.5000
+2026-11-09 21:55:13,254 | INFO     | src.models | Evaluando modelo candidato: LogisticRegression
+2026-11-09 21:55:13,292 | INFO     | src.evaluation | Calculando métricas de clasificación sobre 35276 muestras...
+2026-11-09 21:55:13,322 | INFO     | src.evaluation | Métricas calculadas: Accuracy=0.7603 | Precision=0.8118 | Recall=0.7603 | F1=0.7736 | ROC-AUC=0.8343
+2026-11-09 21:55:13,322 | INFO     | src.models | Evaluando modelo candidato: RandomForest_Tuned
+2026-11-09 21:55:13,503 | INFO     | src.evaluation | Calculando métricas de clasificación sobre 35276 muestras...
+2026-11-09 21:55:13,533 | INFO     | src.evaluation | Métricas calculadas: Accuracy=0.7926 | Precision=0.8212 | Recall=0.7926 | F1=0.8013 | ROC-AUC=0.8556
+2026-11-09 21:55:13,534 | INFO     | src.models | Modelo ganador seleccionado: 'RandomForest_Tuned' con F1-Score ponderado de 0.8013
+2026-11-09 21:55:13,895 | INFO     | src.evaluation | Matriz de confusión guardada en: /Users/fer/Library/CloudStorage/GoogleDrive-f.galera.05@gmail.com/My Drive/z - Licenciatura/3er cuatrimestre 2-2026/03 - Programacion avanzada/z - TP/taller_integrador/logs/matriz_confusion_ganador.png
+2026-11-09 21:55:13,896 | INFO     | pipeline_main | [Paso 8/8] Persistiendo resultados y parámetros en MongoDB...
+2026-11-09 21:55:13,903 | INFO     | src.db_mongo | Resultados del modelo guardados en MongoDB [Colección 'resultados', _id: 6af26b71392c897aa0dff740]
+2026-11-09 21:55:13,909 | INFO     | src.db_mongo | Parámetros del modelo guardados en MongoDB [Colección 'parametros', _id: 6af26b71392c897aa0dff744]
+2026-11-09 21:55:13,960 | INFO     | src.models | Modelo serializado exitosamente en: /Users/fer/Library/CloudStorage/GoogleDrive-f.galera.05@gmail.com/My Drive/z - Licenciatura/3er cuatrimestre 2-2026/03 - Programacion avanzada/z - TP/taller_integrador/app/modelo_ganador.joblib
+2026-11-09 21:55:13,961 | INFO     | pipeline_main | ==================================================================
+2026-11-09 21:55:13,961 | INFO     | pipeline_main |  ¡PIPELINE FINALIZADO CON ÉXITO!
+2026-11-09 21:55:13,961 | INFO     | pipeline_main |  Modelo Ganador: RandomForest_Tuned
+2026-11-09 21:55:13,962 | INFO     | pipeline_main |  Accuracy: 0.7926 | Precision: 0.8212 | Recall: 0.7926 | F1-Score: 0.8013
+2026-11-09 21:55:13,962 | INFO     | pipeline_main |  SQLite: dataset limpio guardado en /Users/fer/Library/CloudStorage/GoogleDrive-f.galera.05@gmail.com/My Drive/z - Licenciatura/3er cuatrimestre 2-2026/03 - Programacion avanzada/z - TP/taller_integrador/data/inmuebles.db (tabla 'departamentos_limpios')
+2026-11-09 21:55:13,962 | INFO     | pipeline_main |  MongoDB: resultados y parámetros guardados en mongodb://localhost:27017 (db: taller_inmobiliario)
+2026-11-09 21:55:13,963 | INFO     | pipeline_main |  Para lanzar la aplicación web: streamlit run app/app.py
+2026-11-09 21:55:13,963 | INFO     | pipeline_main | ==================================================================
