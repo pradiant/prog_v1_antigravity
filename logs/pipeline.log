@@ -745,3 +745,101 @@ LON                        2003
 2026-11-09 22:58:43,400 | INFO     | pipeline_main |  MongoDB: resultados y parámetros guardados en mongodb://localhost:27017 (db: taller_inmobiliario)
 2026-11-09 22:58:43,400 | INFO     | pipeline_main |  Para lanzar la aplicación web: streamlit run app/app.py
 2026-11-09 22:58:43,400 | INFO     | pipeline_main | ==================================================================
+2026-11-09 23:17:20,389 | INFO     | src.data_loader | [2001] archivo encontrado: departamentos-en-venta-2001.csv
+2026-11-09 23:17:20,451 | INFO     | src.data_loader | [2001] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 23:17:20,454 | WARNING  | src.data_loader | [2001] 12911 filas con LAT/LON invertidas, se corrigen
+2026-11-09 23:17:20,455 | INFO     | src.data_loader | [2001] estandarizado: (12911, 17) -> (12911, 22)
+2026-11-09 23:17:20,456 | INFO     | src.data_loader | [2002] archivo encontrado: departamentos-en-venta-2002.csv
+2026-11-09 23:17:20,485 | INFO     | src.data_loader | [2002] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 23:17:20,488 | INFO     | src.data_loader | [2002] estandarizado: (7363, 17) -> (7363, 22)
+2026-11-09 23:17:20,489 | INFO     | src.data_loader | [2003] archivo encontrado: departamentos-en-venta-2003.csv
+2026-11-09 23:17:20,615 | INFO     | src.data_loader | [2003] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 23:17:20,618 | INFO     | src.data_loader | [2003] estandarizado: (13525, 17) -> (13525, 22)
+2026-11-09 23:17:20,619 | INFO     | src.data_loader | [2004] archivo encontrado: departamentos-en-venta-2004.csv
+2026-11-09 23:17:20,638 | INFO     | src.data_loader | [2004] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 23:17:20,640 | INFO     | src.data_loader | [2004] estandarizado: (4808, 17) -> (4808, 22)
+2026-11-09 23:17:20,642 | INFO     | src.data_loader | [2005] archivo encontrado: departamentos-en-venta-2005.csv
+2026-11-09 23:17:20,658 | INFO     | src.data_loader | [2005] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 23:17:20,661 | INFO     | src.data_loader | [2005] estandarizado: (3503, 17) -> (3503, 22)
+2026-11-09 23:17:20,662 | INFO     | src.data_loader | [2006] archivo encontrado: departamentos-en-venta-2006.csv
+2026-11-09 23:17:20,678 | INFO     | src.data_loader | [2006] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 23:17:20,681 | INFO     | src.data_loader | [2006] estandarizado: (3448, 17) -> (3448, 22)
+2026-11-09 23:17:20,682 | INFO     | src.data_loader | [2007] archivo encontrado: departamentos-en-venta-2007.csv
+2026-11-09 23:17:20,695 | WARNING  | src.data_loader | Línea descartada por formato inválido: ;;;;;;;;;;;;;;;;4400;58.0;33000;569.0;0;0;;;;0;;;PARQUE AVELLANEDA;9;
+2026-11-09 23:17:20,696 | WARNING  | src.data_loader | Línea descartada por formato inválido: ;;;;;;;;;;;;;;;;4200;49.0;36000;734.7;0;0;;;;0;;;VILLA LUGANO;8;
+2026-11-09 23:17:20,697 | WARNING  | src.data_loader | Línea descartada por formato inválido: ;;;;;;;;;;;;;;;;4600;72.0;56900;790.3;4;20;CONTRAFRENTE;;;0;SI;;VILLA LUGANO;8;
+2026-11-09 23:17:20,698 | WARNING  | src.data_loader | Línea descartada por formato inválido: ;;;;;;;;;;;;;;;;4700;62.0;40000;645.2;4;30;CONTRAFRENTE;;;0;;;VILLA LUGANO;8;
+2026-11-09 23:17:20,698 | WARNING  | src.data_loader | Línea descartada por formato inválido: ;;;;;;;;;;;;;;;;4900;70.0;34500;492.9;4;70;FRENTE;;;0;SI;;VILLA LUGANO;8;
+2026-11-09 23:17:20,723 | INFO     | src.data_loader | [2007] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 23:17:20,725 | INFO     | src.data_loader | [2007] estandarizado: (7910, 17) -> (7910, 22)
+2026-11-09 23:17:20,727 | INFO     | src.data_loader | [2008] archivo encontrado: departamentos-en-venta-2008.csv
+2026-11-09 23:17:20,759 | INFO     | src.data_loader | [2008] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 23:17:20,761 | INFO     | src.data_loader | [2008] estandarizado: (7524, 17) -> (7524, 22)
+2026-11-09 23:17:20,763 | INFO     | src.data_loader | [2009] archivo encontrado: departamentos-en-venta-2009.csv
+2026-11-09 23:17:20,855 | INFO     | src.data_loader | [2009] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 23:17:20,858 | INFO     | src.data_loader | [2009] estandarizado: (23614, 17) -> (23614, 22)
+2026-11-09 23:17:20,859 | INFO     | src.data_loader | [2010] archivo encontrado: departamentos-en-venta-2010.csv
+2026-11-09 23:17:20,936 | INFO     | src.data_loader | [2010] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 23:17:20,939 | INFO     | src.data_loader | [2010] estandarizado: (18466, 17) -> (18466, 22)
+2026-11-09 23:17:20,941 | INFO     | src.data_loader | [2011] archivo encontrado: departamentos-en-venta-2011.csv
+2026-11-09 23:17:21,030 | INFO     | src.data_loader | [2011] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 23:17:21,032 | INFO     | src.data_loader | [2011] estandarizado: (17314, 17) -> (17314, 22)
+2026-11-09 23:17:21,034 | INFO     | src.data_loader | [2012] archivo encontrado: departamentos-en-venta-2012.csv
+2026-11-09 23:17:21,068 | INFO     | src.data_loader | [2012] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 23:17:21,071 | INFO     | src.data_loader | [2012] estandarizado: (8828, 17) -> (8828, 22)
+2026-11-09 23:17:21,072 | INFO     | src.data_loader | [2013] archivo encontrado: departamentos-en-venta-2013.csv
+2026-11-09 23:17:21,150 | INFO     | src.data_loader | [2013] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 23:17:21,151 | WARNING  | src.data_loader | [2013] columnas no contempladas (se descartan): ['PESOS', 'PESOS_M2']
+2026-11-09 23:17:21,153 | INFO     | src.data_loader | [2013] estandarizado: (17576, 19) -> (17576, 22)
+2026-11-09 23:17:21,155 | INFO     | src.data_loader | [2014] archivo encontrado: departamentos-en-venta-2014.csv
+2026-11-09 23:17:21,212 | INFO     | src.data_loader | [2014] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 23:17:21,215 | INFO     | src.data_loader | [2014] estandarizado: (12724, 17) -> (12724, 22)
+2026-11-09 23:17:21,216 | INFO     | src.data_loader | [2015] archivo encontrado: departamentos-en-venta-2015.csv
+2026-11-09 23:17:21,313 | INFO     | src.data_loader | [2015] columnas ausentes (se rellenan con NaN): ['M2_CUBIERTOS', 'ORIENT']
+2026-11-09 23:17:21,314 | WARNING  | src.data_loader | [2015] columnas no contempladas (se descartan): ['ES_ESTRENAR', 'FRENTE_Y_CONTRA', 'EDIFICACION', 'DEPENDENCIA', 'OBS1', 'FUENTE', 'DIRECCION', 'NOMB_CA_CO', 'AV_SCORE', 'AV_SIDE', 'AREA', 'ZONA', 'BARRIO_NORMALIZADO', 'COMUNA_NORMALIZADA', 'CODIGO_POSTAL', 'CODIGO_POSTAL_ARGENTINO']
+2026-11-09 23:17:21,316 | INFO     | src.data_loader | [2015] estandarizado: (11414, 35) -> (11414, 22)
+2026-11-09 23:17:21,318 | INFO     | src.data_loader | [2016] archivo encontrado: departamentos-en-venta-2016.csv
+2026-11-09 23:17:21,385 | INFO     | src.data_loader | [2016] columnas ausentes (se rellenan con NaN): ['DORMITORIO', 'PISO', 'ORIENT', 'BAULERA', 'COCHERA', 'LAVADERO', 'TERRAZA']
+2026-11-09 23:17:21,386 | WARNING  | src.data_loader | [2016] columnas no contempladas (se descartan): ['ID_ZONAPRO', 'OPERACION', 'TIPO', 'PRECIOTEXT', 'PRECIOARS', 'PRECIOARSM', 'DIRECCION', 'LOCATION', 'PUBLICADO', 'PROCESADO', 'URL', 'REVISION', 'NOTA', 'CODIGO_POSTAL', 'CODIGO_POSTAL_ARGENTINO']
+2026-11-09 23:17:21,388 | INFO     | src.data_loader | [2016] estandarizado: (7564, 29) -> (7564, 22)
+2026-11-09 23:17:21,429 | INFO     | src.data_loader | Dataset unificado: 178492 filas, 22 columnas
+2026-11-09 23:17:21,433 | INFO     | src.data_loader | Coordenadas fuera de CABA en total: 150
+2026-11-09 23:17:21,434 | WARNING  | src.data_loader | [2012] 150 filas con coordenadas fuera de CABA
+2026-11-09 23:17:21,477 | INFO     | src.data_loader | Nulos por columna:
+CALLE                      1382
+NUMERO                     1387
+M2                            5
+M2_CUBIERTOS             170928
+DOLARES                       5
+U_S_M2                        5
+AMBIENTES                 47530
+DORMITORIO               167078
+PISO                     167078
+ANTIGUEDAD                45889
+ORIENT                    96346
+BAULERA                  152698
+COCHERA                  141097
+BAÑOS                     58812
+LAVADERO                 128926
+TERRAZA                  102397
+BARRIO                     1387
+COMUNA                     1387
+DIRECCION_NORMALIZADA    160896
+LAT                        2003
+LON                        2003
+2026-11-09 23:17:21,516 | WARNING  | src.data_loader | [2001] columnas completamente nulas: ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 23:17:21,517 | WARNING  | src.data_loader | [2002] columnas completamente nulas: ['M2_CUBIERTOS', 'AMBIENTES', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 23:17:21,518 | WARNING  | src.data_loader | [2003] columnas completamente nulas: ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 23:17:21,519 | WARNING  | src.data_loader | [2004] columnas completamente nulas: ['M2_CUBIERTOS', 'AMBIENTES', 'DORMITORIO', 'PISO', 'BAÑOS', 'LAVADERO', 'DIRECCION_NORMALIZADA']
+2026-11-09 23:17:21,520 | WARNING  | src.data_loader | [2005] columnas completamente nulas: ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'BAÑOS', 'LAVADERO', 'DIRECCION_NORMALIZADA']
+2026-11-09 23:17:21,521 | WARNING  | src.data_loader | [2006] columnas completamente nulas: ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 23:17:21,522 | WARNING  | src.data_loader | [2007] columnas completamente nulas: ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 23:17:21,523 | WARNING  | src.data_loader | [2008] columnas completamente nulas: ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 23:17:21,524 | WARNING  | src.data_loader | [2009] columnas completamente nulas: ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 23:17:21,524 | WARNING  | src.data_loader | [2010] columnas completamente nulas: ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 23:17:21,525 | WARNING  | src.data_loader | [2011] columnas completamente nulas: ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 23:17:21,526 | WARNING  | src.data_loader | [2012] columnas completamente nulas: ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 23:17:21,527 | WARNING  | src.data_loader | [2013] columnas completamente nulas: ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 23:17:21,528 | WARNING  | src.data_loader | [2014] columnas completamente nulas: ['M2_CUBIERTOS', 'DORMITORIO', 'PISO', 'DIRECCION_NORMALIZADA']
+2026-11-09 23:17:21,530 | WARNING  | src.data_loader | [2015] columnas completamente nulas: ['M2_CUBIERTOS', 'ORIENT']
+2026-11-09 23:17:21,531 | WARNING  | src.data_loader | [2016] columnas completamente nulas: ['DORMITORIO', 'PISO', 'ORIENT', 'BAULERA', 'COCHERA', 'LAVADERO', 'TERRAZA']

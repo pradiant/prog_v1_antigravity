@@ -834,7 +834,7 @@ Si el estudiante tiene MongoDB activo, los datos se guardan como documentos semi
     "f1_score": 0.8013,
     "roc_auc": 0.8556
   },
-  "matriz_confusion": [[24210, 2247], [5069, 3750]],
+  "matriz_confusion": [[21299, 5133], [2183, 6661]],
   "muestra_predicciones": [
     {"id": 0, "real": 0, "prediccion": 0, "probabilidad": 0.1824},
     {"id": 1, "real": 1, "prediccion": 1, "probabilidad": 0.8142}
