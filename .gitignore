@@ -1,4 +1,7 @@
+# Python
+__pycache__/
+*.pyc
 .venv/
 
-logs/
-__pycache__/app/modelo_ganador.joblib
+# Modelos entrenados
+*.joblib
